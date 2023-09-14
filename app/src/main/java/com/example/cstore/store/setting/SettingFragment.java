@@ -1,22 +1,30 @@
 package com.example.cstore.store.setting;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentSettingBinding;
+import com.example.cstore.login.LoginFragment;
+import com.example.cstore.store.PagerFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SettingFragment extends Fragment {
+    public static String USER_FILE_NAME = "User";
+    public static String NAME_KEY = "username";
+    public static String PASS_KEY = "password";
 
     private FragmentSettingBinding binding;
     public SettingFragment() {
@@ -34,5 +42,28 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SharedPreferences modePreferences = requireActivity().getSharedPreferences(USER_FILE_NAME, Context.MODE_PRIVATE);
+        TextView username = binding.username;
+        TextView email = binding.email;
+        String usn = modePreferences.getString(NAME_KEY, "123");
+        username.setText(usn);
+        email.setText(usn + "@gmail.com");
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modePreferences.edit().putString(NAME_KEY, null).apply();
+                modePreferences.edit().putString(PASS_KEY, null).apply();
+//                Intent intent = new Intent(requireActivity(), LoginFragment.class);
+//                startActivity(intent);
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.wrapper, new LoginFragment(), null).commit();
+            }
+        });
     }
 }

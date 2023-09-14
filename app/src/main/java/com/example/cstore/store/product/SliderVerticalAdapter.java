@@ -1,4 +1,4 @@
-package com.example.cstore.store.home;
+package com.example.cstore.store.product;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -14,13 +14,13 @@ import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SliderHorizontalAdapter extends SliderViewAdapter<SliderHorizontalAdapter.SliderAdapterViewHolder> {
+public class SliderVerticalAdapter extends SliderViewAdapter<SliderVerticalAdapter.SliderAdapterViewHolder> {
 
     // list for storing urls of images.
     private final List<SliderData> mSliderItems;
 
     // Constructor
-    public SliderHorizontalAdapter(ArrayList<SliderData> sliderDataArrayList) {
+    public SliderVerticalAdapter(ArrayList<SliderData> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
     }
 
@@ -29,7 +29,7 @@ public class SliderHorizontalAdapter extends SliderViewAdapter<SliderHorizontalA
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
         @SuppressLint("InflateParams")
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_slider_horizontal, null);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_slider_vertical, null);
         return new SliderAdapterViewHolder(inflate);
     }
 

@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.cstore.store.favorite.FavoriteFragment;
 import com.example.cstore.store.home.HomeFragment;
 import com.example.cstore.store.product.ProductFragment;
+import com.example.cstore.store.product.detail.ProductDetailFragment;
 import com.example.cstore.store.setting.SettingFragment;
 
 import java.util.List;
