@@ -1,4 +1,4 @@
-package com.example.cstore.store;
+package com.example.cstore.presentation.store;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;

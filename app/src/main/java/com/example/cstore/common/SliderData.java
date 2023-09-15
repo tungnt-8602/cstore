@@ -1,4 +1,4 @@
-package com.example.cstore;
+package com.example.cstore.common;
 
 public class SliderData {
 

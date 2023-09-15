@@ -1,15 +1,14 @@
-package com.example.cstore.store;
+package com.example.cstore.presentation.store;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.cstore.store.favorite.FavoriteFragment;
-import com.example.cstore.store.home.HomeFragment;
-import com.example.cstore.store.product.ProductFragment;
-import com.example.cstore.store.product.detail.ProductDetailFragment;
-import com.example.cstore.store.setting.SettingFragment;
+import com.example.cstore.presentation.store.favorite.FavoriteFragment;
+import com.example.cstore.presentation.store.home.HomeFragment;
+import com.example.cstore.presentation.store.product.ProductFragment;
+import com.example.cstore.presentation.store.setting.SettingFragment;
 
 import java.util.List;
 

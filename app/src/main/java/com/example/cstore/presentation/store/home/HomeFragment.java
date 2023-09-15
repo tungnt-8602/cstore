@@ -1,4 +1,4 @@
-package com.example.cstore.store.home;
+package com.example.cstore.presentation.store.home;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,7 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cstore.SliderData;
+import com.example.cstore.common.SliderData;
+import com.example.cstore.common.SliderHorizontalAdapter;
 import com.example.cstore.databinding.FragmentHomeBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

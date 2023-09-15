@@ -1,4 +1,4 @@
-package com.example.cstore.store.product;
+package com.example.cstore.presentation.store.product;
 
 import android.os.Bundle;
 
@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cstore.R;
-import com.example.cstore.databinding.FragmentPagerBinding;
 import com.example.cstore.databinding.FragmentProductBinding;
 import com.example.cstore.model.Product;
 

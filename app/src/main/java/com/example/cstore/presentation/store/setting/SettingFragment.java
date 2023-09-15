@@ -1,7 +1,6 @@
-package com.example.cstore.store.setting;
+package com.example.cstore.presentation.store.setting;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,8 +17,7 @@ import android.widget.TextView;
 
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentSettingBinding;
-import com.example.cstore.login.LoginFragment;
-import com.example.cstore.store.PagerFragment;
+import com.example.cstore.presentation.login.LoginFragment;
 
 public class SettingFragment extends Fragment {
     public static String USER_FILE_NAME = "User";

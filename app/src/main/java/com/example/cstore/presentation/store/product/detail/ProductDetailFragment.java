@@ -1,4 +1,4 @@
-package com.example.cstore.store.product.detail;
+package com.example.cstore.presentation.store.product.detail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.cstore.SliderData;
+import com.example.cstore.common.SliderData;
 import com.example.cstore.databinding.LayoutProductBinding;
-import com.example.cstore.store.product.ColorAdapter;
-import com.example.cstore.store.product.SliderVerticalAdapter;
+import com.example.cstore.common.SliderVerticalAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
-package com.example.cstore;
+package com.example.cstore.presentation;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -8,9 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.example.cstore.R;
 import com.example.cstore.databinding.ActivityMainBinding;
-import com.example.cstore.login.LoginFragment;
-import com.example.cstore.store.PagerFragment;
+import com.example.cstore.presentation.store.PagerFragment;
 
 public class MainActivity extends AppCompatActivity {
 

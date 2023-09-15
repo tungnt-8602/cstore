@@ -49,5 +49,7 @@ dependencies {
 //    implementation ("org.slf4j:slf4j-nop:2.0.7")
     implementation ("com.squareup.picasso:picasso:2.71828")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    // Utility
+    implementation("com.google.code.gson:gson:2.10.1")
 
 }

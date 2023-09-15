@@ -1,7 +1,6 @@
-package com.example.cstore.login;
+package com.example.cstore.presentation.login;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,10 +17,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.cstore.MainActivity;
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentLoginBinding;
-import com.example.cstore.store.PagerFragment;
+import com.example.cstore.presentation.store.PagerFragment;
 
 public class LoginFragment extends Fragment {
     public static String USER_FILE_NAME = "User";

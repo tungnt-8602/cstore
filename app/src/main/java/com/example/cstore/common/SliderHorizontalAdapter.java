@@ -1,4 +1,4 @@
-package com.example.cstore.store.product;
+package com.example.cstore.common;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -8,19 +8,18 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.cstore.R;
-import com.example.cstore.SliderData;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SliderVerticalAdapter extends SliderViewAdapter<SliderVerticalAdapter.SliderAdapterViewHolder> {
+public class SliderHorizontalAdapter extends SliderViewAdapter<SliderHorizontalAdapter.SliderAdapterViewHolder> {
 
     // list for storing urls of images.
     private final List<SliderData> mSliderItems;
 
     // Constructor
-    public SliderVerticalAdapter(ArrayList<SliderData> sliderDataArrayList) {
+    public SliderHorizontalAdapter(ArrayList<SliderData> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
     }
 
@@ -29,7 +28,7 @@ public class SliderVerticalAdapter extends SliderViewAdapter<SliderVerticalAdapt
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
         @SuppressLint("InflateParams")
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_slider_vertical, null);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_slider_horizontal, null);
         return new SliderAdapterViewHolder(inflate);
     }
 

@@ -1,4 +1,4 @@
-package com.example.cstore.store.favorite;
+package com.example.cstore.presentation.store.favorite;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentFavoriteBinding;
 
 /**

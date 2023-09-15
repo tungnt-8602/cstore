@@ -1,4 +1,4 @@
-package com.example.cstore.store;
+package com.example.cstore.presentation.store;
 
 import android.os.Bundle;
 
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentPagerBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

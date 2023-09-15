@@ -1,4 +1,4 @@
-package com.example.cstore.store.product;
+package com.example.cstore.presentation.store.product;
 
 import android.content.Context;
 import android.view.LayoutInflater;
