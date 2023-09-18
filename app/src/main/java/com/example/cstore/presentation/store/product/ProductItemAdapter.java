@@ -20,6 +20,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
     private Context context;
     private List<Product> productArrayList;
+    private OnClickListener onClickListener;
 
     public ProductItemAdapter(Context context, List<Product> productArrayList) {
         this.context = context;
@@ -43,8 +44,19 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick( position, productArrayList.get(position));
+                }
             }
         });
+    }
+
+    public interface OnClickListener {
+        void onClick(int position, Product p);
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
 

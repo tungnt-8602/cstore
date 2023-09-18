@@ -9,10 +9,14 @@ import android.widget.GridView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.databinding.LayoutProductBinding;
 import com.example.cstore.common.SliderVerticalAdapter;
+import com.example.cstore.presentation.store.product.ProductFragment;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -34,6 +38,22 @@ public class ProductDetailFragment extends Fragment {
         initSlider();
         GridView gridview = binding.colorPick;
         gridview.setAdapter(new ColorAdapter(requireContext()));
+
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.fade_in,  // enter
+                        R.anim.slide_out,  // exit
+                        R.anim.slide_in,   // popEnter
+                        R.anim.fade_out  // popExit
+                );
+                transaction
+                        .remove(ProductDetailFragment.this)
+                        .commit();
+            }
+        });
     }
 
     private void initSlider() {

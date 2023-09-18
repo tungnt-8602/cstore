@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentProductBinding;
 import com.example.cstore.model.Product;
+import com.example.cstore.presentation.store.PagerFragment;
+import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +58,19 @@ public class ProductFragment extends Fragment {
         recyclerProduct.setAdapter(productAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(),2);
         recyclerProduct.setLayoutManager(layoutManager);
-
+        productAdapter.setOnClickListener(new ProductItemAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product p) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.add(R.id.wrapper, new ProductDetailFragment(), null).commit();
+            }
+        });
     }
 
     private void initProdcts(){
