@@ -51,5 +51,4 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     // Utility
     implementation("com.google.code.gson:gson:2.10.1")
-
 }

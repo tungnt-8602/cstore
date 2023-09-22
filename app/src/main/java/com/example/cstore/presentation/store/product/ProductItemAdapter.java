@@ -1,5 +1,6 @@
 package com.example.cstore.presentation.store.product;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         return new ViewHolder(productView);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product p = productArrayList.get(position);
