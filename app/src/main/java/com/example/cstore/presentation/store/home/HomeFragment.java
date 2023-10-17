@@ -8,15 +8,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderHorizontalAdapter;
 import com.example.cstore.databinding.FragmentHomeBinding;
+import com.example.cstore.presentation.store.AboutDetailFragment;
+import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -60,6 +65,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             Uri uri = Uri.parse("https://www.coolmate.me/"); // missing 'http://' will cause crashed
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+        });
+
+        binding.storyHeader.setOnClickListener(v -> {
+            Bundle result = new Bundle();
+            result.putString("storyTitle", binding.storyTitle.toString());
+            result.putString("storySubTitle", binding.storyShortDes.toString());
+            // The child fragment needs to still set the result on its parent fragment manager.
+            getParentFragmentManager().setFragmentResult("storyKey", result);
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                    R.anim.slide_in,  // enter
+                    R.anim.fade_out,  // exit
+                    R.anim.fade_in,   // popEnter
+                    R.anim.slide_out  // popExit
+            );
+            transaction.add(R.id.wrapper, new AboutDetailFragment(), null).commit();
         });
     }
 
