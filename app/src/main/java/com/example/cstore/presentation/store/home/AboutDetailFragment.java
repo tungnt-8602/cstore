@@ -1,4 +1,4 @@
-package com.example.cstore.presentation.store;
+package com.example.cstore.presentation.store.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 
 import com.example.cstore.R;
 import com.example.cstore.common.SliderData;

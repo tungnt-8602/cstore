@@ -100,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="16dp"
+            android:background="@drawable/item_touch"
             app:layout_constraintTop_toBottomOf="@id/cardSlider">
 
             <ImageView
@@ -129,11 +130,11 @@
 
             <TextView
                 android:id="@+id/story_more_title"
+                style="@style/BaseText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center|end"
                 android:text="@string/more"
-                style="@style/BaseText"
                 app:layout_constraintBottom_toBottomOf="@id/story_title"
                 app:layout_constraintEnd_toStartOf="@id/more_story"
                 app:layout_constraintStart_toEndOf="@id/story_title"
@@ -155,9 +156,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/storyCard"
+            style="@style/BaseCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/BaseCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/story_header">
@@ -198,6 +199,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="16dp"
+            android:background="@drawable/item_touch"
             app:layout_constraintTop_toBottomOf="@id/storyCard">
 
             <ImageView
@@ -214,23 +216,23 @@
 
             <TextView
                 android:id="@+id/story_title1"
+                style="@style/TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:gravity="center|start"
                 android:text="@string/title_cus_service"
-                style="@style/TitleText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/section_story1"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/story_more_title1"
+                style="@style/BaseText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center|end"
                 android:text="@string/more"
-                style="@style/BaseText"
                 app:layout_constraintBottom_toBottomOf="@id/story_title1"
                 app:layout_constraintEnd_toStartOf="@id/more_story1"
                 app:layout_constraintStart_toEndOf="@id/story_title1"
@@ -252,9 +254,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/storyCard1"
+            style="@style/BaseCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/BaseCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/story_header1">
@@ -295,6 +297,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="16dp"
+            android:background="@drawable/item_touch"
             app:layout_constraintTop_toBottomOf="@id/storyCard1">
 
             <ImageView
@@ -311,23 +314,23 @@
 
             <TextView
                 android:id="@+id/story_title2"
+                style="@style/TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:gravity="center|start"
                 android:text="@string/title_staff"
-                style="@style/TitleText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/section_story2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/story_more_title2"
+                style="@style/BaseText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center|end"
                 android:text="@string/more"
-                style="@style/BaseText"
                 app:layout_constraintBottom_toBottomOf="@id/story_title2"
                 app:layout_constraintEnd_toStartOf="@id/more_story2"
                 app:layout_constraintStart_toEndOf="@id/story_title2"
@@ -349,9 +352,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/storyCard2"
+            style="@style/BaseCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/BaseCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/story_header2">

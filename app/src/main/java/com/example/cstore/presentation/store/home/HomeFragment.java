@@ -20,7 +20,6 @@ import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderHorizontalAdapter;
 import com.example.cstore.databinding.FragmentHomeBinding;
-import com.example.cstore.presentation.store.AboutDetailFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
