@@ -1,24 +1,20 @@
 package com.example.cstore.presentation.store;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+
 import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderVerticalAdapter;
-import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -38,13 +34,13 @@ public class AboutDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getParentFragmentManager().setFragmentResultListener("storyKey", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                // We use a String here, but any type that can be put in a Bundle is supported.
-                titleContent = bundle.getString("storyTitle");
-                subTitleContent = bundle.getString("storySubTitle");
-            }
+        getParentFragmentManager().setFragmentResultListener("storyKey", this, (requestKey, bundle) -> {
+            // We use a String here, but any type that can be put in a Bundle is supported.
+            titleContent = bundle.getString("storyTitle");
+            subTitleContent = bundle.getString("storySubTitle");
+
+            title.setText(titleContent);
+            subTitle.setText(subTitleContent);
         });
     }
 
@@ -62,25 +58,8 @@ public class AboutDetailFragment extends Fragment {
         subTitle = view.findViewById(R.id.aboutSubTitle);
         back = view.findViewById(R.id.backHome);
 
-        title.setText(titleContent);
-        subTitle.setText(subTitleContent);
-
         initSlider(view);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                        R.anim.fade_in,  // enter
-                        R.anim.slide_out,  // exit
-                        R.anim.slide_in,   // popEnter
-                        R.anim.fade_out  // popExit
-                );
-                transaction
-                        .remove(AboutDetailFragment.this)
-                        .commit();
-            }
-        });
+        back.setOnClickListener(it -> getParentFragmentManager().popBackStack());
 
     }
 

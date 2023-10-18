@@ -3,6 +3,11 @@ package com.example.cstore.presentation.store.home;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,17 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderHorizontalAdapter;
 import com.example.cstore.databinding.FragmentHomeBinding;
 import com.example.cstore.presentation.store.AboutDetailFragment;
-import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -67,10 +66,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             startActivity(intent);
         });
 
-        binding.storyHeader.setOnClickListener(v -> {
+        moveToDetail(binding.storyHeader, binding.storyTitle, binding.storyShortDes);
+        moveToDetail(binding.storyHeader1, binding.storyTitle1, binding.storyShortDes1);
+        moveToDetail(binding.storyHeader2, binding.storyTitle2, binding.storyShortDes2);
+    }
+
+    void moveToDetail(View clickView, TextView title, TextView subTitle){
+        clickView.setOnClickListener(v -> {
             Bundle result = new Bundle();
-            result.putString("storyTitle", binding.storyTitle.toString());
-            result.putString("storySubTitle", binding.storyShortDes.toString());
+            result.putString("storyTitle", title.getText().toString());
+            result.putString("storySubTitle", subTitle.getText().toString());
             // The child fragment needs to still set the result on its parent fragment manager.
             getParentFragmentManager().setFragmentResult("storyKey", result);
             FragmentManager fm = requireActivity().getSupportFragmentManager();
@@ -80,7 +85,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     R.anim.fade_in,   // popEnter
                     R.anim.slide_out  // popExit
             );
-            transaction.add(R.id.wrapper, new AboutDetailFragment(), null).commit();
+            transaction.replace(R.id.wrapper, new AboutDetailFragment(), null).addToBackStack(null).commit();
         });
     }
 
@@ -109,13 +114,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private void initCard(){
         Log.d("ntt", "onClick: map");
         CardView map = binding.cardMap;
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("ntt", "onClick: map click");
+        map.setOnClickListener(v -> {
+            Log.d("ntt", "onClick: map click");
 //                Intent intent = new Intent(requireActivity(), MapsActivity.class);
 //                startActivity(intent);
-            }
         });
         String imageUrl1 = "https://mcdn.coolmate.me/uploads/April2022/Screen_Shot_2022-03-29_at_17.25_1.png";
         Picasso.get().load(imageUrl1).into(binding.storyPic);
