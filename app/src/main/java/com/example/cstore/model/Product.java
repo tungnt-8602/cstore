@@ -1,45 +1,55 @@
 package com.example.cstore.model;
 
 import java.util.List;
-
 public class Product {
-    private String id;
-    private String productName;
+
+    private Integer id;
+    private String name;
+    private String description;
     private Integer price;
-    private List<String> color;
-    private List<String> size;
-    private String material;
-    private List<String> images;
+    private String size;
+    private Integer categoryId;
     private String thumbnail;
+    private List<String> images;
+    private Integer quantity;
 
     public Product() {
     }
 
-    public Product(String id, String productName, Integer price, List<String> color, List<String> size, String material, List<String> images, String thumbnail) {
+    public Product(Integer id, String name, String description, Integer price, String size, Integer categoryId, String thumbnail, List<String> images, Integer quantity) {
         this.id = id;
-        this.productName = productName;
+        this.name = name;
+        this.description = description;
         this.price = price;
-        this.color = color;
         this.size = size;
-        this.material = material;
-        this.images = images;
+        this.categoryId = categoryId;
         this.thumbnail = thumbnail;
+        this.images = images;
+        this.quantity = quantity;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPrice() {
@@ -50,28 +60,28 @@ public class Product {
         this.price = price;
     }
 
-    public List<String> getColor() {
-        return color;
-    }
-
-    public void setColor(List<String> color) {
-        this.color = color;
-    }
-
-    public List<String> getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(List<String> size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
-    public String getMaterial() {
-        return material;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setMaterial(String material) {
-        this.material = material;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public List<String> getImages() {
@@ -82,11 +92,11 @@ public class Product {
         this.images = images;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
