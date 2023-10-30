@@ -2,6 +2,7 @@ package com.example.cstore.presentation.store.favorite;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,14 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.cstore.databinding.FragmentFavoriteBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavoriteFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavoriteFragment extends Fragment {
-
-    private FragmentFavoriteBinding binding;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -29,10 +23,10 @@ public class FavoriteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentFavoriteBinding.inflate(inflater, container, false);
+        com.example.cstore.databinding.FragmentFavoriteBinding binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 }

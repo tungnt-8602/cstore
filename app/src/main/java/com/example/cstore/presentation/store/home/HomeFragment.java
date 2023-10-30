@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             Bundle result = new Bundle();
             result.putString("storyTitle", title.getText().toString());
             result.putString("storySubTitle", subTitle.getText().toString());
-            // The child fragment needs to still set the result on its parent fragment manager.
             getParentFragmentManager().setFragmentResult("storyKey", result);
             FragmentManager fm = requireActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
@@ -115,8 +114,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         CardView map = binding.cardMap;
         map.setOnClickListener(v -> {
             Log.d("ntt", "onClick: map click");
-//                Intent intent = new Intent(requireActivity(), MapsActivity.class);
-//                startActivity(intent);
         });
         String imageUrl1 = "https://mcdn.coolmate.me/uploads/April2022/Screen_Shot_2022-03-29_at_17.25_1.png";
         Picasso.get().load(imageUrl1).into(binding.storyPic);

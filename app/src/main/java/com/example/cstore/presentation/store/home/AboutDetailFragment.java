@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderVerticalAdapter;
+import com.example.cstore.databinding.FragmentAboutDetailBinding;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -24,6 +24,8 @@ public class AboutDetailFragment extends Fragment {
     private ImageButton back;
     private String titleContent;
     private String subTitleContent;
+
+    private FragmentAboutDetailBinding binding;
 
     public AboutDetailFragment() {
         // Required empty public constructor
@@ -44,18 +46,18 @@ public class AboutDetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about_detail, container, false);
+        binding = FragmentAboutDetailBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        title = view.findViewById(R.id.aboutTitle);
-        subTitle = view.findViewById(R.id.aboutSubTitle);
-        back = view.findViewById(R.id.backHome);
+        title = binding.aboutTitle;
+        subTitle = binding.aboutSubTitle;
+        back = binding.backHome;
 
         initSlider(view);
         back.setOnClickListener(it -> getParentFragmentManager().popBackStack());
@@ -72,7 +74,7 @@ public class AboutDetailFragment extends Fragment {
         imageSlider.add("https://vn-test-11.slatic.net/p/05224f5cb2d7fdde7fa2c2fd8a7c0d7f.png");
         imageSlider.add("https://mcdn.coolmate.me/image/August2022/dac-tinh-ao-ba-lo.jpg");
         ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
-        SliderView sliderView = view.findViewById(R.id.imageAboutSlider);
+        SliderView sliderView = binding.imageAboutSlider;
         for (String imageItem : imageSlider) {
             sliderDataArrayList.add(new SliderData(imageItem));
         }
