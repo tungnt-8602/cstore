@@ -22,4 +22,5 @@
     <string name="title_cus_service">Dịch vụ khách hàng</string>
     <string name="title_staff">Nhân viên</string>
     <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="search_hint">Bạn tìm gì hôm nay ?</string>
 </resources>
