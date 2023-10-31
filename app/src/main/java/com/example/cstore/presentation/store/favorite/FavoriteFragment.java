@@ -13,6 +13,9 @@ import com.example.cstore.databinding.FragmentFavoriteBinding;
 
 public class FavoriteFragment extends Fragment {
 
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public FavoriteFragment() {
         // Required empty public constructor
     }

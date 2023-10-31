@@ -1,5 +1,6 @@
 package com.example.cstore.presentation.store;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,14 +21,21 @@ import java.util.List;
 
 public class PagerFragment extends Fragment {
 
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     private FragmentPagerBinding binding;
     private PagerViewModel viewModel;
 
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public PagerFragment() {
-        // Required empty public constructor
     }
 
-
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +43,13 @@ public class PagerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPagerBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,10 +65,8 @@ public class PagerFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Integer position = tab.getPosition();
-                if (position != null) {
-                    binding.viewpager.setCurrentItem(position);
-                    binding.navigation.selectTab(binding.navigation.getTabAt(position));
-                }
+                binding.viewpager.setCurrentItem(position);
+                binding.navigation.selectTab(binding.navigation.getTabAt(position));
             }
 
             @Override

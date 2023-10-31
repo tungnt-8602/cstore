@@ -1,4 +1,4 @@
-package com.example.cstore.presentation.store.product;
+package com.example.cstore.presentation.store.product.product_category;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

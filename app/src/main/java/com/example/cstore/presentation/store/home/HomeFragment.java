@@ -32,12 +32,21 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     private FragmentHomeBinding binding;
     private MapView mapView;
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public HomeFragment() {
         // Required empty public constructor
     }
 
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +79,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         moveToDetail(binding.storyHeader2, binding.storyTitle2, binding.storyShortDes2);
     }
 
+    /* **********************************************************************
+     * Function
+     ********************************************************************** */
     void moveToDetail(View clickView, TextView title, TextView subTitle){
         clickView.setOnClickListener(v -> {
             Bundle result = new Bundle();

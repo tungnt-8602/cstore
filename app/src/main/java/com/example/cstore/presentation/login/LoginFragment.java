@@ -22,23 +22,31 @@ import com.example.cstore.databinding.FragmentLoginBinding;
 import com.example.cstore.presentation.store.PagerFragment;
 
 public class LoginFragment extends Fragment {
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     public static String USER_FILE_NAME = "User";
     public static String NAME_KEY = "username";
     public static String PASS_KEY = "password";
 
     private FragmentLoginBinding binding;
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public LoginFragment() {
         // Required empty public constructor
     }
 
-
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -67,6 +75,9 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    /* **********************************************************************
+     * Function
+     ********************************************************************** */
     private void loginUser(String userName1, String password1) {
         SharedPreferences modePreferences = requireActivity().getSharedPreferences(USER_FILE_NAME, Context.MODE_PRIVATE);
         String saveUsername = modePreferences.getString(NAME_KEY, "123");

@@ -6,7 +6,7 @@
     <string name="setting">Cài đặt</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="brand_describe">Thời trang nam</string>
+    <string name="brand_describe">Coolmate</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBhTaU972-vgJQrUsvnD1we-jcXdrDvezs</string>
     <string name="title_login_form">Chào mừng đến với Coolmate \n Đăng nhập</string>
@@ -21,4 +21,5 @@
     <string name="title_story">Câu chuyện</string>
     <string name="title_cus_service">Dịch vụ khách hàng</string>
     <string name="title_staff">Nhân viên</string>
+    <string name="add_to_cart">Thêm vào giỏ hàng</string>
 </resources>

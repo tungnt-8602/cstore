@@ -18,9 +18,14 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 
 public class ProductDetailFragment extends Fragment {
-
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     LayoutProductBinding binding;
 
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,6 +43,9 @@ public class ProductDetailFragment extends Fragment {
         binding.back.setOnClickListener(it -> getParentFragmentManager().popBackStack());
     }
 
+    /* **********************************************************************
+     * Function
+     ********************************************************************** */
     private void initSlider() {
         ArrayList<String> imageSlider = new ArrayList<>();
         imageSlider.add("https://cf.shopee.vn/file/8353ca176db52037f00818ec85441ce2");

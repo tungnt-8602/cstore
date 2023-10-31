@@ -19,19 +19,26 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 
 public class AboutDetailFragment extends Fragment {
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     private TextView title;
     private TextView subTitle;
     private ImageButton back;
     private String titleContent;
     private String subTitleContent;
-
     private FragmentAboutDetailBinding binding;
 
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public AboutDetailFragment() {
         // Required empty public constructor
     }
 
-
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,5 +1,6 @@
 package com.example.cstore.presentation.store.setting;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,28 +21,38 @@ import com.example.cstore.databinding.FragmentSettingBinding;
 import com.example.cstore.presentation.login.LoginFragment;
 
 public class SettingFragment extends Fragment {
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     public static String USER_FILE_NAME = "User";
     public static String NAME_KEY = "username";
     public static String PASS_KEY = "password";
-
     private FragmentSettingBinding binding;
+
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public SettingFragment() {
         // Required empty public constructor
     }
 
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

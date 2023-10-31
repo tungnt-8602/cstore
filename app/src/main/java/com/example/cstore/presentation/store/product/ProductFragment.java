@@ -8,32 +8,34 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cstore.R;
+//import com.example.broadcastation.common.logger.Logger;
 import com.example.cstore.databinding.FragmentProductBinding;
-import com.example.cstore.model.Products;
-import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
+import com.example.cstore.presentation.MainActivity;
+import com.example.cstore.presentation.store.product.product_category.ProductCategoryAdapter;
+import com.example.cstore.presentation.store.product.product_category.ProductCategoryFragment;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductFragment extends Fragment {
-    public List<Products> productsList = new ArrayList<>();
-    public List<String> colorList = new ArrayList<>();
-    public List<String> sizeList = new ArrayList<>();
-    public List<String> imageList = new ArrayList<>();
-    private RecyclerView recyclerProduct;
-    private ProductItemAdapter productAdapter ;
-
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     private FragmentProductBinding binding;
+    private ProductViewModel viewModel;
+
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public ProductFragment() {
-        // Required empty public constructor
     }
 
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class ProductFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProductBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -50,52 +52,41 @@ public class ProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initProdcts();
-        recyclerProduct = binding.productList;
-        productAdapter = new ProductItemAdapter(requireContext(), productsList);
-        recyclerProduct.setAdapter(productAdapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(),2);
-        recyclerProduct.setLayoutManager(layoutManager);
-        productAdapter.setOnClickListener((position, p) -> {
-            FragmentManager fm = requireActivity().getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                    R.anim.slide_in,  // enter
-                    R.anim.fade_out,  // exit
-                    R.anim.fade_in,   // popEnter
-                    R.anim.slide_out  // popExit
-            );
-            transaction.replace(R.id.wrapper, new ProductDetailFragment(), null).addToBackStack(null).commit();
+        List<ProductCategoryFragment> fragments = new ArrayList<>();
+        //TODO: call api category and products by that category id
+        //TODO: set it to fragment list
+
+        //Fake data
+        for (int i = 0; i < 10; i++) {
+            fragments.add(new ProductCategoryFragment());
+        }
+        binding.viewPager.setAdapter(new ProductCategoryAdapter((MainActivity) requireActivity(), fragments));
+        new TabLayoutMediator(binding.categoryTabLayout, binding.viewPager, (tab, position) -> {
+            tab.setText("CATEGORY".toUpperCase());
+        }).attach();
+        binding.categoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Integer position = tab.getPosition();
+                if (position != null) {
+                    binding.viewPager.setCurrentItem(position);
+                    binding.categoryTabLayout.selectTab(binding.categoryTabLayout.getTabAt(position));
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
     }
 
-    private void initProdcts(){
-        colorList.add("Trắng");
-        colorList.add("Xanh biển");
-        colorList.add("Be");
-        colorList.add("Xanh đậm");
-        colorList.add("Đen");
-        colorList.add("Nâu");
-        colorList.add("Xanh mint");
-        colorList.add("Xanh rêu");
-        colorList.add("Xanh tím");
-        sizeList.add("S");
-        sizeList.add("M");
-        sizeList.add("L");
-        sizeList.add("XL");
-        sizeList.add("2XL");
-        sizeList.add("3XL");
-        sizeList.add("4XL");
-        imageList.add("https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b");
-        productsList.add(new Products("1", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-        productsList.add(new Products("2", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://mcdn.coolmate.me/image/July2023/mceclip0_67.jpg"));
-        productsList.add(new Products("3", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-        productsList.add(new Products("4", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-        productsList.add(new Products("5", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://mcdn.coolmate.me/image/July2023/mceclip0_67.jpg"));
-        productsList.add(new Products("6", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-        productsList.add(new Products("7", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-        productsList.add(new Products("8", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-        productsList.add(new Products("9", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://mcdn.coolmate.me/image/July2023/mceclip0_67.jpg"));
-        productsList.add(new Products("10", "T-Shirt Cotton 220GSM", 179000, colorList, sizeList, "Cotton", imageList, "https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b"));
-
-    }
+    /* **********************************************************************
+     * Function
+     ********************************************************************** */
 }

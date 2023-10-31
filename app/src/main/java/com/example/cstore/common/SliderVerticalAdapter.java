@@ -15,16 +15,21 @@ import java.util.List;
 
 public class SliderVerticalAdapter extends SliderViewAdapter<SliderVerticalAdapter.SliderAdapterViewHolder> {
 
-    // list for storing urls of images.
+    /* **********************************************************************
+     * Variable
+     ********************************************************************** */
     private final List<SliderData> mSliderItems;
 
-    // Constructor
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
     public SliderVerticalAdapter(ArrayList<SliderData> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
     }
 
-    // We are inflating the slider_layout
-    // inside on Create View Holder method.
+    /* **********************************************************************
+     * Lifecycle
+     ********************************************************************** */
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
         @SuppressLint("InflateParams")
@@ -32,31 +37,24 @@ public class SliderVerticalAdapter extends SliderViewAdapter<SliderVerticalAdapt
         return new SliderAdapterViewHolder(inflate);
     }
 
-    // Inside on bind view holder we will
-    // set data to item of Slider View.
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
-
         final SliderData sliderItem = mSliderItems.get(position);
-
-        // Glide is use to load image
-        // from url in your imageview.
         Glide.with(viewHolder.itemView)
                 .load(sliderItem.getImgUrl())
                 .fitCenter()
                 .into(viewHolder.imageViewBackground);
     }
 
-    // this method will return
-    // the count of our list.
     @Override
     public int getCount() {
         return mSliderItems.size();
     }
 
+    /* **********************************************************************
+     * Class
+     ********************************************************************** */
     static class SliderAdapterViewHolder extends ViewHolder {
-        // Adapter class for initializing
-        // the views of our slider view.
         View itemView;
         ImageView imageViewBackground;
 

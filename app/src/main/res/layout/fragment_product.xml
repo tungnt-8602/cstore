@@ -6,17 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".presentation.store.product.ProductFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mt38"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/category_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/bluer"
+        android:elevation="12dp"
+        app:tabGravity="start"
+        app:tabMode="scrollable"
+        android:background="?attr/colorOnPrimary"
+        app:tabIndicatorHeight="3dp"
+        app:tabIndicatorGravity="bottom"
+        app:tabSelectedTextColor="@color/bluer"
+        app:tabIndicatorAnimationMode="elastic"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/productList"
+    <!-- ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mt38" />
+        app:layout_constraintTop_toBottomOf="@id/category_tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

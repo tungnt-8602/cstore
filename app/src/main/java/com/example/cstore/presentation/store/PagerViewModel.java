@@ -29,7 +29,7 @@ public class PagerViewModel extends ViewModel {
                 new Tab(
                         Type.FAVORITE,
                         R.string.favorite,
-                        R.drawable.ic_favorite_selector,
+                        R.drawable.ic_shopping_cart_selector,
                         null
                 ),
                 new Tab(
