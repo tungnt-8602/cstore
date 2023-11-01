@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
     private Context context;
     private List<Products> productsArrayList;
     private OnClickListener onClickListener;
+    private OnClickListener onAddToCartClickListener;
 
     public ProductItemAdapter(Context context, List<Products> productsArrayList) {
         this.context = context;
@@ -47,7 +49,15 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
             @Override
             public void onClick(View view) {
                 if (onClickListener != null) {
-                    onClickListener.onClick( position, productsArrayList.get(position));
+                    onClickListener.onClick(position, p);
+                }
+            }
+        });
+        holder.addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onAddToCartClickListener != null) {
+                    onAddToCartClickListener.onClick(position, p);
                 }
             }
         });
@@ -61,6 +71,9 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         this.onClickListener = onClickListener;
     }
 
+    public void setOnAddToCartClickListener(OnClickListener onAddToCartClick) {
+        this.onAddToCartClickListener = onAddToCartClick;
+    }
 
     @Override
     public int getItemCount() {
@@ -71,12 +84,14 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         private ImageView productThumb;
         private TextView productName;
         private TextView productPrice;
+        private ImageButton addToCart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productThumb = itemView.findViewById(R.id.productThumb);
             productName = itemView.findViewById(R.id.productName);
             productPrice = itemView.findViewById(R.id.price);
+            addToCart = itemView.findViewById(R.id.add_to_cart_btn);
         }
     }
 }

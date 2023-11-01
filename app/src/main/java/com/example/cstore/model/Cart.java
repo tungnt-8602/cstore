@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Cart {
     private Integer id;
-    private List<Order> orderList;
+    private List<ProductOrder> orderList;
     private Integer accountId;
 
     public Cart() {
     }
 
-    public Cart(Integer id, List<Order> orderList, Integer accountId) {
+    public Cart(Integer id, List<ProductOrder> orderList, Integer accountId) {
         this.id = id;
         this.orderList = orderList;
         this.accountId = accountId;
@@ -25,11 +25,11 @@ public class Cart {
         this.id = id;
     }
 
-    public List<Order> getOrderList() {
+    public List<ProductOrder> getOrderList() {
         return orderList;
     }
 
-    public void setOrderList(List<Order> orderList) {
+    public void setOrderList(List<ProductOrder> orderList) {
         this.orderList = orderList;
     }
 

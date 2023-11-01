@@ -1,9 +1,11 @@
 package com.example.cstore.presentation.store.product.product_category;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,6 +23,7 @@ import com.example.cstore.model.Product;
 import com.example.cstore.model.Products;
 import com.example.cstore.model.api.ApiBuilder;
 import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class ProductCategoryFragment extends Fragment {
     /* **********************************************************************
      * Variable
      ********************************************************************** */
+    private final ProductCategoryViewModel viewModel = new ProductCategoryViewModel();
     public List<Products> productsList = new ArrayList<>();
     public List<Product> productList = new ArrayList<>();
     public List<String> colorList = new ArrayList<>();
@@ -66,6 +70,7 @@ public class ProductCategoryFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -85,6 +90,10 @@ public class ProductCategoryFragment extends Fragment {
             );
             transaction.replace(R.id.wrapper, new ProductDetailFragment(), null).addToBackStack(null).commit();
         });
+        productAdapter.setOnAddToCartClickListener(((position, p) -> {
+            viewModel.addToCart(p);
+            Snackbar.make(binding.productList, "Add to cart", Snackbar.LENGTH_SHORT).show();
+        }));
 
         ApiBuilder.apiService.getProductList("")
                 .enqueue(new Callback<List<Product>>() {

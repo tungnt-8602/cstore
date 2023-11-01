@@ -1,31 +1,29 @@
 package com.example.cstore.model;
 
-import java.util.List;
-public class Product {
-
+public class ProductOrder {
     private Integer id;
     private String name;
     private String description;
     private Integer price;
-    private List<String> size;
+    private String color;
+    private String size;
     private Integer categoryId;
-    private String thumbnail;
-    private List<String> images;
-    private Integer quantity;
+    private String images;
+    private Integer orderNumber;
 
-    public Product() {
+    public ProductOrder() {
     }
 
-    public Product(Integer id, String name, String description, Integer price, List<String> size, Integer categoryId, String thumbnail, List<String> images, Integer quantity) {
+    public ProductOrder(Integer id, String name, String description, Integer price, String color, String size, Integer categoryId, String images, Integer orderNumber) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.color = color;
         this.size = size;
         this.categoryId = categoryId;
-        this.thumbnail = thumbnail;
         this.images = images;
-        this.quantity = quantity;
+        this.orderNumber = orderNumber;
     }
 
     public Integer getId() {
@@ -60,11 +58,19 @@ public class Product {
         this.price = price;
     }
 
-    public List<String> getSize() {
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
         return size;
     }
 
-    public void setSize(List<String> size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -76,27 +82,19 @@ public class Product {
         this.categoryId = categoryId;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public List<String> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(String images) {
         this.images = images;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getOrderNumber() {
+        return orderNumber;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }
