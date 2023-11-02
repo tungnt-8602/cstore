@@ -46,6 +46,7 @@ public class ProductCategoryFragment extends Fragment {
     private RecyclerView recyclerProduct;
     private ProductItemAdapter productAdapter ;
     private FragmentProductCategoryBinding binding;
+    private Integer categoryId;
 
     /* **********************************************************************
      * Constructor
@@ -74,7 +75,24 @@ public class ProductCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initProdcts();
+//        initProdcts();
+//        ApiBuilder.apiService.getProductList()
+//                .enqueue(new Callback<List<Product>>() {
+//                    @Override
+//                    public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+//                        Log.d("call api", "onResponse: " + response.body());
+//                        List<Product> lp = response.body();
+//                        if(lp != null){
+//                            productList.addAll(lp);
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+//                        Log.d("call api", "onResponse: " + t.getMessage());
+//                    }
+//                });
         recyclerProduct = binding.productList;
         productAdapter = new ProductItemAdapter(requireContext(), productsList);
         recyclerProduct.setAdapter(productAdapter);
@@ -95,23 +113,7 @@ public class ProductCategoryFragment extends Fragment {
             Snackbar.make(binding.productList, "Add to cart", Snackbar.LENGTH_SHORT).show();
         }));
 
-        ApiBuilder.apiService.getProductList("")
-                .enqueue(new Callback<List<Product>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
-                        Log.d("call api", "onResponse: " + response.body());
-                        List<Product> lp = response.body();
-                        if(lp != null){
-                            productList.addAll(lp);
-                        }
 
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
-                        Log.d("call api", "onResponse: " + t.getMessage());
-                    }
-                });
     }
 
     /* **********************************************************************

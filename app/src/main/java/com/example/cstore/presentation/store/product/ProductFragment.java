@@ -1,6 +1,7 @@
 package com.example.cstore.presentation.store.product;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +9,29 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 //import com.example.broadcastation.common.logger.Logger;
+import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentProductBinding;
+import com.example.cstore.model.Category;
+import com.example.cstore.model.Product;
+import com.example.cstore.model.api.ApiBuilder;
 import com.example.cstore.presentation.MainActivity;
+import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 import com.example.cstore.presentation.store.product.product_category.ProductCategoryAdapter;
 import com.example.cstore.presentation.store.product.product_category.ProductCategoryFragment;
+import com.example.cstore.presentation.store.search.SearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductFragment extends Fragment {
     /* **********************************************************************
@@ -53,34 +66,68 @@ public class ProductFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<ProductCategoryFragment> fragments = new ArrayList<>();
+        List<String> categoryNameList = new ArrayList<>();
+        ApiBuilder.apiService.getCategory()
+                .enqueue(new Callback<List<Category>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
+                        Log.d("call api", "onResponse: " + response.body());
+                        List<Category> categories = response.body();
+                        if(categories != null){
+                            for (Category c: categories ) {
+                                categoryNameList.add(c.getName());
+                            }
+                        }
+                        for (String cn: categoryNameList) {
+                            fragments.add(new ProductCategoryFragment());
+                        }
+                        binding.viewPager.setAdapter(new ProductCategoryAdapter((MainActivity) requireActivity(), fragments));
+                        new TabLayoutMediator(binding.categoryTabLayout, binding.viewPager, (tab, position) -> {
+                            tab.setText(categoryNameList.get(position).toUpperCase());
+                        }).attach();
+                        binding.categoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                            @Override
+                            public void onTabSelected(TabLayout.Tab tab) {
+                                Integer position = tab.getPosition();
+                                if (position != null) {
+                                    binding.viewPager.setCurrentItem(position);
+                                    binding.categoryTabLayout.selectTab(binding.categoryTabLayout.getTabAt(position));
+                                }
+                            }
+
+                            @Override
+                            public void onTabUnselected(TabLayout.Tab tab) {
+
+                            }
+
+                            @Override
+                            public void onTabReselected(TabLayout.Tab tab) {
+
+                            }
+                        });
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
+                        Log.d("call api", "onResponse: " + t.getMessage());
+                    }
+                });
         //TODO: call api category and products by that category id
         //TODO: set it to fragment list
 
         //Fake data
-        for (int i = 0; i < 10; i++) {
-            fragments.add(new ProductCategoryFragment());
-        }
-        binding.viewPager.setAdapter(new ProductCategoryAdapter((MainActivity) requireActivity(), fragments));
-        new TabLayoutMediator(binding.categoryTabLayout, binding.viewPager, (tab, position) -> {
-            tab.setText("CATEGORY".toUpperCase());
-        }).attach();
-        binding.categoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Integer position = tab.getPosition();
-                if (position != null) {
-                    binding.viewPager.setCurrentItem(position);
-                    binding.categoryTabLayout.selectTab(binding.categoryTabLayout.getTabAt(position));
-                }
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
 
-            }
-
+        binding.textSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                    transaction.replace(R.id.wrapper, new SearchFragment(), null).addToBackStack(null).commit();
 
             }
         });

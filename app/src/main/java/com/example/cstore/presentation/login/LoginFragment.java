@@ -28,7 +28,6 @@ public class LoginFragment extends Fragment {
     public static String USER_FILE_NAME = "User";
     public static String NAME_KEY = "username";
     public static String PASS_KEY = "password";
-
     private FragmentLoginBinding binding;
     /* **********************************************************************
      * Constructor

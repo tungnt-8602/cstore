@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.cstore.presentation.store.favorite.FavoriteFragment;
+import com.example.cstore.presentation.store.cart.CartFragment;
 import com.example.cstore.presentation.store.home.HomeFragment;
 import com.example.cstore.presentation.store.product.ProductFragment;
 import com.example.cstore.presentation.store.setting.SettingFragment;
@@ -35,7 +35,7 @@ public class PagerAdapter extends FragmentStateAdapter {
                     fragment = new ProductFragment();
                     break;
                 case FAVORITE:
-                    fragment = new FavoriteFragment();
+                    fragment = new CartFragment();
                     break;
                 case SETTING:
                     fragment = new SettingFragment();
