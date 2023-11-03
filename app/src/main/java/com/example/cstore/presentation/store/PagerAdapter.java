@@ -34,9 +34,6 @@ public class PagerAdapter extends FragmentStateAdapter {
                 case PRODUCT:
                     fragment = new ProductFragment();
                     break;
-                case FAVORITE:
-                    fragment = new CartFragment();
-                    break;
                 case SETTING:
                     fragment = new SettingFragment();
                     break;

@@ -2,7 +2,6 @@ package com.example.cstore.presentation.store.cart;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +9,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.cstore.R;
 import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.Products;
-import com.example.cstore.presentation.store.product.product_category.ProductItemAdapter;
-
 import java.util.List;
 
+@SuppressLint("NotifyDataSetChanged")
 public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHolder> {
 
     private Context context;
     private List<ProductOrder> poArrayList;
     private OnClickListener onClickListener;
-    private OnClickListener onAddToCartClickListener;
 
     public ItemCartAdapter(Context context, List<ProductOrder> poArrayList) {
         this.context = context;
@@ -46,7 +41,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductOrder p = poArrayList.get(position);
-//        Glide.with(context).load("https://img.ws.mms.shopee.vn/vn-11134207-7r98o-lkqk86doy0g00b").into(holder.poImage);
+        Glide.with(context).load(p.getImage()).into(holder.poImage);
         holder.poName.setText(p.getName());
         holder.poPrice.setText(p.getPrice().toString());
         holder.poSize.setText(holder.poSize.getText() + p.getSize());
@@ -78,10 +73,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
-    }
-
-    public void setOnAddToCartClickListener(OnClickListener onAddToCartClick) {
-        this.onAddToCartClickListener = onAddToCartClick;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -90,14 +82,14 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView poImage;
-        private TextView poName;
-        private TextView poPrice;
-        private TextView poSize;
-        private TextView poColor;
+        private final ImageView poImage;
+        private final TextView poName;
+        private final TextView poPrice;
+        private final TextView poSize;
+        private final TextView poColor;
         private EditText poNumber;
-        private ImageButton poMinus;
-        private ImageButton poBonus;
+        private final ImageButton poMinus;
+        private final ImageButton poBonus;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             poImage = itemView.findViewById(R.id.po_image);

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.cstore.model.Product;
 import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.Products;
 import com.google.gson.Gson;
@@ -42,10 +43,13 @@ public class Preference {
      * Function
      ********************************************************************** */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    void saveToCart(Products p) {
+    void saveToCart(Product p) {
         try {
             List<ProductOrder> poList = getCart();
-            ProductOrder poToCart = new ProductOrder(Integer.valueOf(p.getId()), p.getProductName(), p.getMaterial(), p.getPrice(), p.getColor().get(0), "S", 1, "", 1);
+            ProductOrder poToCart = new ProductOrder(
+                    p.getId(), p.getName(), p.getPrice(),
+                    p.getColors().get(0), p.getSizes().get(0),
+                    p.getCategoryId(), p.getImages().get(0).getUrl(), 1);
             Boolean duplicate = checkAddDuplicateProductToCart(poToCart, poList);
             String pastList = shared.getString(cartList, "");
             if (duplicate) {

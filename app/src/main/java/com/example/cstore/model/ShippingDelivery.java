@@ -1,7 +1,10 @@
 package com.example.cstore.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ShippingDelivery {
-    private Integer id;
+    @SerializedName("_id")
+    private String id;
     private String name;
     private Integer price;
     private Integer deliveryTime;
@@ -9,18 +12,18 @@ public class ShippingDelivery {
     public ShippingDelivery() {
     }
 
-    public ShippingDelivery(Integer id, String name, Integer price, Integer deliveryTime) {
+    public ShippingDelivery(String id, String name, Integer price, Integer deliveryTime) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.deliveryTime = deliveryTime;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

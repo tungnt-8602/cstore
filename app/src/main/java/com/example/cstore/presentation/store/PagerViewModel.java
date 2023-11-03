@@ -27,12 +27,6 @@ public class PagerViewModel extends ViewModel {
                         null
                 ),
                 new Tab(
-                        Type.FAVORITE,
-                        R.string.favorite,
-                        R.drawable.ic_shopping_cart_selector,
-                        null
-                ),
-                new Tab(
                         Type.SETTING,
                         R.string.setting,
                         R.drawable.ic_setting_selector,

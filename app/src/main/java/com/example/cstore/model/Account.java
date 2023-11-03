@@ -1,7 +1,7 @@
 package com.example.cstore.model;
 
 public class Account {
-    private Integer id;
+    private String id;
     private String username;
     private String password;
     private String address;
@@ -11,7 +11,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(Integer id, String username, String password, String address, String phone, String email) {
+    public Account(String id, String username, String password, String address, String phone, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -20,11 +20,11 @@ public class Account {
         this.email = email;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

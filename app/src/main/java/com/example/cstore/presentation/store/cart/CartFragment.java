@@ -9,7 +9,6 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +28,7 @@ public class CartFragment extends Fragment {
     FragmentCartBinding binding;
     private RecyclerView recyclerCart;
     private ItemCartAdapter poAdapter;
-    private CartViewModel viewModel = new CartViewModel();
+    CartViewModel viewModel = new CartViewModel();
     /* **********************************************************************
      * Constructor
      ********************************************************************** */
@@ -42,6 +41,7 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -56,14 +56,17 @@ public class CartFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.back.setOnClickListener(it -> getParentFragmentManager().popBackStack());
         recyclerCart = binding.cartList;
         List<ProductOrder> poList = viewModel.getCart();
         poAdapter = new ItemCartAdapter(requireContext(), poList);
-        recyclerCart.setAdapter(poAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        recyclerCart.setLayoutManager(layoutManager);
+        binding.cartList.setAdapter(poAdapter);
+        binding.cartList.setLayoutManager(new LinearLayoutManager(requireContext()));
         poAdapter.setOnClickListener((position, p) -> {
             FragmentManager fm = requireActivity().getSupportFragmentManager();
+            recyclerCart.setAdapter(poAdapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+            recyclerCart.setLayoutManager(layoutManager);
             FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
                     R.anim.slide_in,  // enter
                     R.anim.fade_out,  // exit

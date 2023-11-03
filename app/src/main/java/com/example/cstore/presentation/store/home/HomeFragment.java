@@ -20,6 +20,7 @@ import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderHorizontalAdapter;
 import com.example.cstore.databinding.FragmentHomeBinding;
+import com.example.cstore.presentation.store.cart.CartFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -72,6 +73,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             Uri uri = Uri.parse("https://www.coolmate.me/"); // missing 'http://' will cause crashed
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+        });
+
+        binding.cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
+            }
         });
 
         moveToDetail(binding.storyHeader, binding.storyTitle, binding.storyShortDes);

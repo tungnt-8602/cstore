@@ -12,23 +12,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-//import com.example.broadcastation.common.logger.Logger;
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentProductBinding;
 import com.example.cstore.model.Category;
-import com.example.cstore.model.Product;
 import com.example.cstore.model.api.ApiBuilder;
 import com.example.cstore.presentation.MainActivity;
-import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 import com.example.cstore.presentation.store.product.product_category.ProductCategoryAdapter;
 import com.example.cstore.presentation.store.product.product_category.ProductCategoryFragment;
 import com.example.cstore.presentation.store.search.SearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,33 +61,30 @@ public class ProductFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<ProductCategoryFragment> fragments = new ArrayList<>();
-        List<String> categoryNameList = new ArrayList<>();
-        ApiBuilder.apiService.getCategory()
+        List<Category> categoryList = new ArrayList<>();
+        ApiBuilder.apiService.getAllCategory()
                 .enqueue(new Callback<List<Category>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
                         Log.d("call api", "onResponse: " + response.body());
                         List<Category> categories = response.body();
                         if(categories != null){
-                            for (Category c: categories ) {
-                                categoryNameList.add(c.getName());
-                            }
+                            categoryList.addAll(categories);
                         }
-                        for (String cn: categoryNameList) {
-                            fragments.add(new ProductCategoryFragment());
+                        for (Category c: categoryList) {
+                            ProductCategoryFragment f = ProductCategoryFragment.newInstance(c.getId());
+                            fragments.add(f);
                         }
                         binding.viewPager.setAdapter(new ProductCategoryAdapter((MainActivity) requireActivity(), fragments));
                         new TabLayoutMediator(binding.categoryTabLayout, binding.viewPager, (tab, position) -> {
-                            tab.setText(categoryNameList.get(position).toUpperCase());
+                            tab.setText(categoryList.get(position).getName().toUpperCase());
                         }).attach();
                         binding.categoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                             @Override
                             public void onTabSelected(TabLayout.Tab tab) {
-                                Integer position = tab.getPosition();
-                                if (position != null) {
-                                    binding.viewPager.setCurrentItem(position);
-                                    binding.categoryTabLayout.selectTab(binding.categoryTabLayout.getTabAt(position));
-                                }
+                                int position = tab.getPosition();
+                                binding.viewPager.setCurrentItem(position);
+                                binding.categoryTabLayout.selectTab(binding.categoryTabLayout.getTabAt(position));
                             }
 
                             @Override

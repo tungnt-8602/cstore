@@ -13,11 +13,10 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="8dp"
+            android:background="?android:selectableItemBackground"
+            android:padding="16dp"
             android:src="@drawable/ic_back"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
+
             android:elevation="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

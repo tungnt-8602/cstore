@@ -4,24 +4,24 @@ package com.example.cstore.model;
 import java.util.List;
 
 public class Cart {
-    private Integer id;
+    private String id;
     private List<ProductOrder> orderList;
-    private Integer accountId;
+    private String accountId;
 
     public Cart() {
     }
 
-    public Cart(Integer id, List<ProductOrder> orderList, Integer accountId) {
+    public Cart(String id, List<ProductOrder> orderList, String accountId) {
         this.id = id;
         this.orderList = orderList;
         this.accountId = accountId;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -33,11 +33,11 @@ public class Cart {
         this.orderList = orderList;
     }
 
-    public Integer getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Integer accountId) {
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 }

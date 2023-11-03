@@ -9,6 +9,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
+import java.net.URLEncoder;
 
 public interface ApiBuilder {
     ApiBuilder apiService = new Retrofit.Builder()
@@ -21,6 +23,8 @@ public interface ApiBuilder {
     Call<List<Product>> getProductList();
 
     @GET("api/category/all")
-    Call<List<Category>> getCategory();
+    Call<List<Category>> getAllCategory();
 
+    @GET("api/product")
+    Call<List<Product>> getProductsByCategoryId(@Query("categoryId") String categoryId);
 }

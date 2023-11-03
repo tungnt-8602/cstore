@@ -1,36 +1,34 @@
 package com.example.cstore.model;
 
 public class ProductOrder {
-    private Integer id;
+    private String id;
     private String name;
-    private String description;
     private Integer price;
     private String color;
     private String size;
-    private Integer categoryId;
-    private String images;
+    private String categoryId;
+    private String image;
     private Integer orderNumber;
 
     public ProductOrder() {
     }
 
-    public ProductOrder(Integer id, String name, String description, Integer price, String color, String size, Integer categoryId, String images, Integer orderNumber) {
+    public ProductOrder(String id, String name, Integer price, String color, String size, String categoryId, String image, Integer orderNumber) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.price = price;
         this.color = color;
         this.size = size;
         this.categoryId = categoryId;
-        this.images = images;
+        this.image = image;
         this.orderNumber = orderNumber;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -40,14 +38,6 @@ public class ProductOrder {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getPrice() {
@@ -74,19 +64,20 @@ public class ProductOrder {
         this.size = size;
     }
 
-    public Integer getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
-    public void setImages(String images) {
-        this.images = images;
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getOrderNumber() {

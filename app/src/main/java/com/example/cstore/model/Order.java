@@ -2,34 +2,34 @@ package com.example.cstore.model;
 
 
 public class Order {
-    private Integer id;
+    private String id;
     private Product product;
     private Integer orderNumber;
-    private Integer shippingDeliveryId;
+    private String shippingDeliveryId;
 
     public Order() {
     }
 
-    public Order(Integer id, Product product, Integer orderNumber, Integer shippingDeliveryId) {
+    public Order(String id, Product product, Integer orderNumber, String shippingDeliveryId) {
         this.id = id;
         this.product = product;
         this.orderNumber = orderNumber;
         this.shippingDeliveryId = shippingDeliveryId;
     }
 
-    public Integer getShippingDeliveryId() {
+    public String getShippingDeliveryId() {
         return shippingDeliveryId;
     }
 
-    public void setShippingDeliveryId(Integer shippingDeliveryId) {
+    public void setShippingDeliveryId(String shippingDeliveryId) {
         this.shippingDeliveryId = shippingDeliveryId;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

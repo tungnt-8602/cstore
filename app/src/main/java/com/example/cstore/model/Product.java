@@ -1,38 +1,41 @@
 package com.example.cstore.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 public class Product {
 
-    private Integer id;
+    @SerializedName("_id")
+    private String id;
     private String name;
-    private String description;
     private Integer price;
-    private List<String> size;
-    private Integer categoryId;
-    private String thumbnail;
-    private List<String> images;
     private Integer quantity;
+    private List<String> colors;
+    private List<String> sizes;
+    @SerializedName("category")
+    private String categoryId;
+    private List<Image> images;
+
 
     public Product() {
     }
 
-    public Product(Integer id, String name, String description, Integer price, List<String> size, Integer categoryId, String thumbnail, List<String> images, Integer quantity) {
+    public Product(String id, String name, Integer price, Integer quantity, List<String> colors, List<String> sizes, String categoryId, List<Image> images) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.price = price;
-        this.size = size;
-        this.categoryId = categoryId;
-        this.thumbnail = thumbnail;
-        this.images = images;
         this.quantity = quantity;
+        this.colors = colors;
+        this.sizes = sizes;
+        this.categoryId = categoryId;
+        this.images = images;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -44,14 +47,6 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getPrice() {
         return price;
     }
@@ -60,43 +55,43 @@ public class Product {
         this.price = price;
     }
 
-    public List<String> getSize() {
-        return size;
-    }
-
-    public void setSize(List<String> size) {
-        this.size = size;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public List<String> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<String> color) {
+        this.colors = colors;
+    }
+
+    public List<String> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<String> sizes) {
+        this.sizes = sizes;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }
