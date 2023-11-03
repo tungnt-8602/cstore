@@ -2,6 +2,10 @@ package com.example.cstore.presentation.store.product.product_category;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,19 +16,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentProductCategoryBinding;
 import com.example.cstore.model.Product;
-import com.example.cstore.model.Products;
 import com.example.cstore.model.api.ApiBuilder;
-import com.example.cstore.presentation.store.cart.CartFragment;
+import com.example.cstore.presentation.store.cart.detail.CartDetailFragment;
 import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,16 +105,15 @@ public class ProductCategoryFragment extends Fragment {
                                 transaction.replace(R.id.wrapper, new ProductDetailFragment(), null).addToBackStack(null).commit();
                             });
                             productAdapter.setOnAddToCartClickListener(((position, p) -> {
-                                viewModel.addToCart(p);
+//                                viewModel.addToCart(p);
                                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                                 FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                                        R.anim.slide_in,  // enter
+                                        R.anim.slide_down,  // enter
                                         R.anim.fade_out,  // exit
                                         R.anim.fade_in,   // popEnter
-                                        R.anim.slide_out  // popExit
+                                        R.anim.slide_up  // popExit
                                 );
-                                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
-                                Snackbar.make(binding.productList, "Add to cart", Snackbar.LENGTH_SHORT).show();
+                                transaction.replace(R.id.wrapper, CartDetailFragment.newInstance(p.getId())).addToBackStack(null).commit();
                             }));
                         }
 

@@ -26,4 +26,8 @@
     <string name="po_size">"Size: "</string>
     <string name="po_color">"Màu: "</string>
     <string name="cart_fragment">"Giỏ hàng "</string>
+    <string name="color_pick">Chọn màu</string>
+    <string name="size_pick">Chọn size</string>
+    <string name="stock">"Kho: "</string>
+    <string name="default_po_number">1</string>
 </resources>
