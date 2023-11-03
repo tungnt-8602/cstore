@@ -1,6 +1,7 @@
 package com.example.cstore.presentation.store.cart.detail;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.ListPopupWindow;
 import androidx.fragment.app.Fragment;
 
@@ -17,7 +19,9 @@ import com.bumptech.glide.Glide;
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentCartDetailBinding;
 import com.example.cstore.model.Product;
+import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.api.ApiBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -30,6 +34,7 @@ import retrofit2.Response;
  * Use the {@link CartDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CartDetailFragment extends Fragment {
     /* **********************************************************************
      * Variable
@@ -46,6 +51,7 @@ public class CartDetailFragment extends Fragment {
     ListPopupWindow colorPopup;
     ArrayAdapter sizeAdapter ;
     ListPopupWindow sizePopup;
+    CartDetailViewModel viewModel = new CartDetailViewModel();
 
     /* **********************************************************************
      * Constructor
@@ -82,6 +88,7 @@ public class CartDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.close.setOnClickListener(it -> getParentFragmentManager().popBackStack());
 
         colorPopup = new ListPopupWindow(requireContext());
         sizePopup = new ListPopupWindow(requireContext());
@@ -134,6 +141,18 @@ public class CartDetailFragment extends Fragment {
                                     sizePopup.show();
                                 }
                             });
+                            binding.cartAddBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(binding.sizeText.getText().equals("") && binding.sizeText.getText().equals("")){
+                                        Snackbar.make(binding.getRoot(), "Chọn size hoặc màu để thêm vào giỏ hàng", Snackbar.LENGTH_SHORT).show();
+                                    }else{
+                                        viewModel.addToCart(new ProductOrder(p.getId(), p.getName(), p.getPrice(), (String) binding.colorText.getText(), (String) binding.sizeText.getText(), p.getCategoryId(), p.getImages().get(0).getUrl(), Integer.valueOf(binding.poCount.getText().toString())));
+                                        getParentFragmentManager().popBackStack();
+                                    }
+                                }
+                            });
+
                         }
                     }
 

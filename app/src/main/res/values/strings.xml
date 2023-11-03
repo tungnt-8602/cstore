@@ -30,4 +30,8 @@
     <string name="size_pick">Chọn size</string>
     <string name="stock">"Kho: "</string>
     <string name="default_po_number">1</string>
+    <string name="order">Đặt hàng</string>
+    <string name="total_pay">Thành tiền:</string>
+    <string name="ship_supplier">Đơn vị vận chuyển</string>
+    <string name="default_shipping">Chưa chọn</string>
 </resources>

@@ -5,9 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.cstore.model.Product;
 import com.example.cstore.model.ProductOrder;
-import com.example.cstore.model.Products;
 
 import java.util.List;
 
@@ -43,8 +41,8 @@ public class LocalControl {
      * Function
      ********************************************************************** */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void saveToCart(Product p) {
-        preference.saveToCart(p);
+    public void saveToCart(ProductOrder po) {
+        preference.saveToCart(po);
     }
 
     public void saveAllToCart(List<ProductOrder> poList) {

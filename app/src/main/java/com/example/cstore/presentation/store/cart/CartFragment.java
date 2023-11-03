@@ -62,7 +62,7 @@ public class CartFragment extends Fragment {
         poAdapter = new ItemCartAdapter(requireContext(), poList);
         binding.cartList.setAdapter(poAdapter);
         binding.cartList.setLayoutManager(new LinearLayoutManager(requireContext()));
-        poAdapter.setOnClickListener((position, p) -> {
+        poAdapter.setOnClickListener((position, po) -> {
             FragmentManager fm = requireActivity().getSupportFragmentManager();
             recyclerCart.setAdapter(poAdapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
@@ -73,7 +73,7 @@ public class CartFragment extends Fragment {
                     R.anim.fade_in,   // popEnter
                     R.anim.slide_out  // popExit
             );
-            transaction.replace(R.id.wrapper, new ProductDetailFragment(), null).addToBackStack(null).commit();
+            transaction.replace(R.id.wrapper, ProductDetailFragment.newInstance(po.getId()), null).addToBackStack(null).commit();
         });
     }
 }

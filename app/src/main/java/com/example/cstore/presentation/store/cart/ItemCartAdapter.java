@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.cstore.R;
 import com.example.cstore.model.ProductOrder;
-import com.example.cstore.model.Products;
+
 import java.util.List;
 
 @SuppressLint("NotifyDataSetChanged")
@@ -50,7 +52,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, p);
+                }
             }
         });
         holder.poMinus.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +72,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
     }
 
     public interface OnClickListener {
-        void onClick(int position, Products p);
+        void onClick(int position, ProductOrder po);
     }
 
     public void setOnClickListener(OnClickListener onClickListener) {

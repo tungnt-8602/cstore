@@ -102,7 +102,7 @@ public class ProductCategoryFragment extends Fragment {
                                         R.anim.fade_in,   // popEnter
                                         R.anim.slide_out  // popExit
                                 );
-                                transaction.replace(R.id.wrapper, new ProductDetailFragment(), null).addToBackStack(null).commit();
+                                transaction.replace(R.id.wrapper, ProductDetailFragment.newInstance(p.getId()), null).addToBackStack(null).commit();
                             });
                             productAdapter.setOnAddToCartClickListener(((position, p) -> {
 //                                viewModel.addToCart(p);

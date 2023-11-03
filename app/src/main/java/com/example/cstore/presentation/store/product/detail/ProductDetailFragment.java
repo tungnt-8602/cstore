@@ -1,44 +1,94 @@
 package com.example.cstore.presentation.store.product.detail;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderVerticalAdapter;
-import com.example.cstore.databinding.LayoutProductBinding;
+import com.example.cstore.databinding.FragmentProductDetailBinding;
+import com.example.cstore.model.Image;
+import com.example.cstore.model.Product;
+import com.example.cstore.model.api.ApiBuilder;
+import com.example.cstore.presentation.store.cart.CartFragment;
+import com.example.cstore.presentation.store.cart.detail.CartDetailFragment;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductDetailFragment extends Fragment {
     /* **********************************************************************
      * Variable
      ********************************************************************** */
-    LayoutProductBinding binding;
+    private static final String ARG_PRODUCT_ID= "productId";
 
+    // TODO: Rename and change types of parameters
+    private String productId;
+    FragmentProductDetailBinding binding;
+
+    /* **********************************************************************
+     * Constructor
+     ********************************************************************** */
+    public ProductDetailFragment() {
+        // Required empty public constructor
+    }
+    // TODO: Rename and change types and number of parameters
+    public static ProductDetailFragment newInstance(String productId) {
+        ProductDetailFragment fragment = new ProductDetailFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PRODUCT_ID, productId);
+        fragment.setArguments(args);
+        return fragment;
+    }
     /* **********************************************************************
      * Lifecycle
      ********************************************************************** */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            productId = getArguments().getString(ARG_PRODUCT_ID);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = LayoutProductBinding.inflate(inflater, container, false);
+        binding = FragmentProductDetailBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initSlider();
-        GridView gridview = binding.colorPick;
-        gridview.setAdapter(new ColorAdapter(requireContext()));
+        fetchProductApi();
+        binding.cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
+            }
+        });
 
         binding.back.setOnClickListener(it -> getParentFragmentManager().popBackStack());
     }
@@ -46,25 +96,54 @@ public class ProductDetailFragment extends Fragment {
     /* **********************************************************************
      * Function
      ********************************************************************** */
-    private void initSlider() {
+    private void fetchProductApi() {
         ArrayList<String> imageSlider = new ArrayList<>();
-        imageSlider.add("https://cf.shopee.vn/file/8353ca176db52037f00818ec85441ce2");
-        imageSlider.add("https://vn-test-11.slatic.net/p/f4debd693b9df0fb9531eca12350c015.png");
-        imageSlider.add("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0zT-vU-BxW_sZwQLfhZsDP0uGf1UAQ1_FMUit8aHBPxGQ-42ggKcHVzJcDCDufkqR1_K08nz6LXlFBvcwdyfbVCdlF9cLme81BBRscgh2c85Ox0U_1CTMhE0bxCl3x9V8HQe-aT5DDmIuX5coJ0iGc_KX8HZOd-s7mnReWL_KbwQgRV41FX5H0YSw/s1600/f05ce6b17e612d14baca06076986ebe5.jpg=w700");
-        imageSlider.add("https://img.ws.mms.shopee.vn/vn-11134201-7qukw-li6rwxeb03bmfe");
-        imageSlider.add("https://vn-live-01.slatic.net/p/7ccb520854e72629dcd779974dd7afb1.jpg");
-        imageSlider.add("https://vn-test-11.slatic.net/p/05224f5cb2d7fdde7fa2c2fd8a7c0d7f.png");
-        imageSlider.add("https://mcdn.coolmate.me/image/August2022/dac-tinh-ao-ba-lo.jpg");
-        ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
-        SliderView sliderView = binding.imageProductSlider;
-        for (String imageItem : imageSlider) {
-            sliderDataArrayList.add(new SliderData(imageItem));
-        }
-        SliderVerticalAdapter adapter = new SliderVerticalAdapter(sliderDataArrayList);
-        sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-        sliderView.setSliderAdapter(adapter);
-        sliderView.setScrollTimeInSec(3);
-        sliderView.setAutoCycle(true);
-        sliderView.startAutoCycle();
+        ApiBuilder.apiService.getProductById(productId).
+                enqueue(new Callback<Product>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(Call<Product> call, Response<Product> response) {
+                        Product p = response.body();
+                        for (Image image: p.getImages()) {
+                            imageSlider.add(image.getUrl());
+                        }
+                        ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
+                        SliderView sliderView = binding.imageProductSlider;
+                        for (String imageItem : imageSlider) {
+                            sliderDataArrayList.add(new SliderData(imageItem));
+                        }
+                        SliderVerticalAdapter adapter = new SliderVerticalAdapter(sliderDataArrayList);
+                        sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+                        sliderView.setSliderAdapter(adapter);
+                        sliderView.setScrollTimeInSec(3);
+                        sliderView.setAutoCycle(true);
+                        sliderView.startAutoCycle();
+
+                        binding.productName.setText(p.getName());
+                        binding.productPrice.setText(p.getPrice().toString());
+                        binding.colorPick.setAdapter(new MyBaseAdapter(requireContext(), p.getColors()));
+                        binding.sizePick.setAdapter(new MyBaseAdapter(requireContext(), p.getSizes()));
+
+                        binding.cartAddBtn.setOnClickListener(new View.OnClickListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            @Override
+                            public void onClick(View view) {
+                                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                                        R.anim.slide_down,  // enter
+                                        R.anim.fade_out,  // exit
+                                        R.anim.fade_in,   // popEnter
+                                        R.anim.slide_up  // popExit
+                                );
+                                transaction.replace(R.id.wrapper, CartDetailFragment.newInstance(p.getId())).addToBackStack(null).commit();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<Product> call, Throwable t) {
+
+                    }
+                });
     }
 }

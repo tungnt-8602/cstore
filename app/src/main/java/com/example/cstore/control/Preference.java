@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
-import com.example.cstore.model.Product;
 import com.example.cstore.model.ProductOrder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +39,13 @@ public class Preference {
      * Function
      ********************************************************************** */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    void saveToCart(Product p) {
+    void saveToCart(ProductOrder po) {
         try {
             List<ProductOrder> poList = getCart();
             ProductOrder poToCart = new ProductOrder(
-                    p.getId(), p.getName(), p.getPrice(),
-                    p.getColors().get(0), p.getSizes().get(0),
-                    p.getCategoryId(), p.getImages().get(0).getUrl(), 1);
+                    po.getId(), po.getName(), po.getPrice(),
+                    po.getColor(), po.getSize(),
+                    po.getCategoryId(), po.getImage(), po.getOrderNumber());
             Boolean duplicate = checkAddDuplicateProductToCart(poToCart, poList);
             String pastList = shared.getString(cartList, "");
             if (duplicate) {
@@ -73,7 +73,7 @@ public class Preference {
                         Objects.equals(poElement.getName(), poToCart.getName()) &&
                         Objects.equals(poElement.getSize(), poToCart.getSize()) &&
                         Objects.equals(poElement.getColor(), poToCart.getColor())) {
-                    poElement.setOrderNumber(poElement.getOrderNumber() + 1);
+                    poElement.setOrderNumber(poElement.getOrderNumber() + poToCart.getOrderNumber());
                     duplicate = true;
                     Log.d("add duplicate", "saveToCart: order number" + poElement.getOrderNumber());
                     break;

@@ -17,6 +17,7 @@ import com.example.cstore.databinding.FragmentProductBinding;
 import com.example.cstore.model.Category;
 import com.example.cstore.model.api.ApiBuilder;
 import com.example.cstore.presentation.MainActivity;
+import com.example.cstore.presentation.store.cart.CartFragment;
 import com.example.cstore.presentation.store.product.product_category.ProductCategoryAdapter;
 import com.example.cstore.presentation.store.product.product_category.ProductCategoryFragment;
 import com.example.cstore.presentation.store.search.SearchFragment;
@@ -60,6 +61,20 @@ public class ProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
+            }
+        });
+
         List<ProductCategoryFragment> fragments = new ArrayList<>();
         List<Category> categoryList = new ArrayList<>();
         ApiBuilder.apiService.getAllCategory()
