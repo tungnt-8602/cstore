@@ -30,6 +30,7 @@ import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.ShippingDelivery;
 import com.example.cstore.model.api.ApiBuilder;
 import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
+import com.example.cstore.presentation.store.setting.SignupFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -88,10 +89,10 @@ public class CartFragment extends Fragment {
         binding.cartList.setAdapter(poAdapter);
         binding.cartList.setLayoutManager(new LinearLayoutManager(requireContext()));
         poAdapter.setOnClickListener((position, po) -> {
-            FragmentManager fm = requireActivity().getSupportFragmentManager();
             recyclerCart.setAdapter(poAdapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
             recyclerCart.setLayoutManager(layoutManager);
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
                     R.anim.slide_in,  // enter
                     R.anim.fade_out,  // exit
@@ -209,7 +210,14 @@ public class CartFragment extends Fragment {
         binding.orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
             }
         });
     }

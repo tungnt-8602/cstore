@@ -44,4 +44,10 @@
     <string name="undo">Hoàn tác</string>
     <string name="undo_notice">Hoàn tác thành công</string>
     <string name="no_po_in_cart">Chưa có sản phẩm nào trong giỏ hàng</string>
+    <string name="signup_title">Đăng ký để mua sắm thỏa thích tại Cstore</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="hint_password_again">Nhập lại mật khẩu</string>
+    <string name="hint_address">Địa chỉ giao hàng</string>
+    <string name="hint_email">Gmail</string>
+    <string name="signup">Đăng ký</string>
 </resources>
