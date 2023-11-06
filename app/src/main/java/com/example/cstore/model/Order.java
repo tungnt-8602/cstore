@@ -15,6 +15,12 @@ public class Order {
     public Order() {
     }
 
+    public Order(String account, List<ProductOrder> productOrderList, String shipping) {
+        this.account = account;
+        this.products = productOrderList;
+        this.shipping = shipping;
+    }
+
     public Order(String id, String account, List<ProductOrder> productOrderList, String shipping) {
         this.id = id;
         this.account = account;

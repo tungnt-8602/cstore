@@ -6,12 +6,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.telephony.PhoneNumberUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentSignupBinding;
+import com.example.cstore.model.Account;
+import com.example.cstore.model.api.ApiBuilder;
+
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +35,7 @@ public class SignupFragment extends Fragment {
      * Variable
      ********************************************************************** */
     FragmentSignupBinding binding;
+    SignupViewModel viewModel = new SignupViewModel();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -35,14 +47,6 @@ public class SignupFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignupFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static SignupFragment newInstance(String param1, String param2) {
         SignupFragment fragment = new SignupFragment();
@@ -72,5 +76,85 @@ public class SignupFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userName = "";
+                String password = "";
+                String email = "";
+                String phone = "";
+                String address = "";
+                if(Objects.requireNonNull(binding.userNameText.getText()).toString().equals("")) {
+                    binding.userName.setError(getResources().getString(R.string.empty_username_field));
+                    return;
+                } else {
+                    userName = binding.userNameText.getText().toString();
+                }
+
+                if(Objects.requireNonNull(binding.passwordText.getText()).toString().equals("")) {
+                    binding.passwordText.setError(getResources().getString(R.string.empty_password_field));
+                    return;
+                } else {
+                    password = binding.passwordText.getText().toString();
+                }
+
+                if(Objects.requireNonNull(binding.passwordAgainText.getText()).toString().equals("")) {
+                    binding.passwordAgainText.setError(getResources().getString(R.string.empty_password_again_field));
+                    return;
+                } else if (!binding.passwordAgainText.getText().toString().equals(binding.passwordText.getText().toString())) {
+                    binding.passwordAgainText.setError(getResources().getString(R.string.wrong_password_again_field));
+                    return;
+                } else {
+                    password = binding.passwordText.getText().toString();
+                }
+
+                if(Objects.requireNonNull(binding.emailText.getText()).toString().equals("")) {
+                    binding.emailText.setError(getResources().getString(R.string.empty_email_field));
+                    return;
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.emailText.getText()).matches()) {
+                    binding.emailText.setError(getResources().getString(R.string.wrong_format_email_field));
+                    return;
+                }
+                else {
+                    email = binding.emailText.getText().toString();
+                }
+
+                if(Objects.requireNonNull(binding.phoneText.getText()).toString().equals("")) {
+                    binding.phoneText.setError(getResources().getString(R.string.empty_phone_field));
+                    return;
+                } else if (!PhoneNumberUtils.isGlobalPhoneNumber(binding.phoneText.getText().toString())) {
+                    binding.phoneText.setError(getResources().getString(R.string.wrong_format_phone_field));
+                    return;
+                }
+                else {
+                    phone = binding.phoneText.getText().toString();
+                }
+
+                if(Objects.requireNonNull(binding.addressText.getText()).toString().equals("")) {
+                    binding.addressText.setError(getResources().getString(R.string.empty_address_field));
+                    return;
+                } else {
+                    address = binding.addressText.getText().toString();
+                }
+                Account registerAccount = new Account( userName, password, address, phone, email);
+                ApiBuilder.apiService.register(registerAccount).enqueue(new Callback<Account>() {
+                    @Override
+                    public void onResponse(Call<Account> call, Response<Account> response) {
+                        Account registeredAccount = response.body();
+                        if(registeredAccount != null){
+                            viewModel.saveAccount(registeredAccount);
+                        }
+                        getParentFragmentManager().popBackStack();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Account> call, Throwable t) {
+                        Log.d("call account api", "onFailure: " + t.getMessage());
+                    }
+                });
+            }
+        });
+
+
     }
 }

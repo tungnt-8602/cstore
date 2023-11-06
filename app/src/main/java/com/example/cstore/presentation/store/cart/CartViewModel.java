@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.cstore.R;
 import com.example.cstore.common.base.BaseViewModel;
+import com.example.cstore.model.Account;
 import com.example.cstore.model.ProductOrder;
 
 import java.util.List;
@@ -42,6 +43,13 @@ public class CartViewModel extends BaseViewModel {
     public Integer getShippingPrice(){
         return local.getShippingPrice();
     }
+    public void updateShippingId(String shipping){
+        local.saveShippingId(shipping);
+    }
+
+    public String getShippingId(){
+        return local.getShippingId();
+    }
 
     public void updateShippingPrice(Integer price){
         local.saveShippingPrice(price);
@@ -54,4 +62,12 @@ public class CartViewModel extends BaseViewModel {
     public void updateProductPrice(Integer price){
         local.saveProductPrice(price);
     }
+    public Account getAccount(){
+        return local.getRegisteredAccount();
+    }
+
+    public void saveAccount(Account account){
+        local.saveRegisteredAccount(account);
+    }
+
 }

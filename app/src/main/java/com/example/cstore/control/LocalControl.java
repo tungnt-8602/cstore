@@ -5,6 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.cstore.model.Account;
 import com.example.cstore.model.ProductOrder;
 
 import java.util.List;
@@ -63,6 +64,12 @@ public class LocalControl {
     public void saveShippingPrice(Integer price){
         preference.saveShippingPrice(price);
     }
+    public String getShippingId(){
+        return preference.getShippingId();
+    }
+    public void saveShippingId(String shipping){
+        preference.saveShippingId(shipping);
+    }
 
     public Integer getShippingPrice(){
         return preference.getShippingPrice();
@@ -74,5 +81,13 @@ public class LocalControl {
 
     public Integer getProductPrice(){
         return preference.getProductPrice();
+    }
+
+    public void saveRegisteredAccount(Account account){
+        preference.saveAccount(account);
+    }
+
+    public Account getRegisteredAccount(){
+        return preference.getRegisteredAccount();
     }
 }

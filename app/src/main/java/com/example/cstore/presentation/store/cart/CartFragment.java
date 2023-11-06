@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import android.widget.ArrayAdapter;
 import com.example.cstore.R;
 import com.example.cstore.common.Utility;
 import com.example.cstore.databinding.FragmentCartBinding;
+import com.example.cstore.model.Order;
 import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.ShippingDelivery;
 import com.example.cstore.model.api.ApiBuilder;
@@ -175,18 +177,21 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onResponse(Call<List<ShippingDelivery>> call, Response<List<ShippingDelivery>> response) {
                         List<ShippingDelivery> lsp = response.body();
-                        List<String> shippingList = new ArrayList<>();
+                        List<String> shippingListName = new ArrayList<>();
+                        List<String> shippingListId = new ArrayList<>();
                         for (ShippingDelivery sd: lsp) {
-                            shippingList.add(sd.getName());
+                            shippingListName.add(sd.getName());
+                            shippingListId.add(sd.getId());
                         }
-                        shippingAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, shippingList);
+                        shippingAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, shippingListName);
                         shippingPopup.setAdapter(shippingAdapter);
                         shippingPopup.setAnchorView(binding.shippingBotDiv);
                         shippingPopup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                binding.shippingPick.setText(shippingList.get(i));
-                                viewModel.updateShipping(shippingList.get(i));
+                                binding.shippingPick.setText(shippingListName.get(i));
+                                viewModel.updateShipping(shippingListName.get(i));
+                                viewModel.updateShippingId(shippingListId.get(i));
                                 Integer shippingFee = Integer.valueOf(lsp.get(i).getPrice());
                                 viewModel.updateShippingPrice(shippingFee);
                                 shippingPopup.dismiss();
@@ -210,23 +215,38 @@ public class CartFragment extends Fragment {
         binding.orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                        R.anim.slide_in,  // enter
-                        R.anim.fade_out,  // exit
-                        R.anim.fade_in,   // popEnter
-                        R.anim.slide_out  // popExit
-                );
-                transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
+                if(viewModel.getAccount() != null){
+                    List<ProductOrder> poList = viewModel.getCart();
+                    String accountId = viewModel.getAccount().getId();
+                    String shippingId = viewModel.getShippingId();
+                    Order order = new Order(accountId, poList, shippingId);
+                    ApiBuilder.apiService.saveOrder(order).enqueue(new Callback<Order>() {
+                        @Override
+                        public void onResponse(Call<Order> call, Response<Order> response) {
+                            Log.d("order api", "onResponse: " + response.body());
+                            Snackbar.make(binding.getRoot(), "Đặt hàng thành công", Snackbar.LENGTH_SHORT).show();
+                            getParentFragmentManager().popBackStack();;
+                        }
+
+                        @Override
+                        public void onFailure(Call<Order> call, Throwable t) {
+                            Log.d("order api", "onResponse: " + t.getMessage());
+                        }
+                    });
+
+                }else{
+                    Snackbar.make(binding.getRoot(), "Vui lòng đăng ký tài khoản để đặt hàng", Snackbar.LENGTH_SHORT).show();
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    );
+                    transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
+                }
+
             }
         });
-    }
-
-    private Integer updateProductPrice(List<ProductOrder> poList){
-        Integer totalPrice = 0;
-        for (ProductOrder p: poList) {
-            totalPrice += p.getPrice()*p.getOrderNumber();
-        }
-        return totalPrice;
     }
 }

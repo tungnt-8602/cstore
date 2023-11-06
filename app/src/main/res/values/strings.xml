@@ -50,4 +50,13 @@
     <string name="hint_address">Địa chỉ giao hàng</string>
     <string name="hint_email">Gmail</string>
     <string name="signup">Đăng ký</string>
+    <string name="empty_username_field">Nhập tên mà bạn muối chúng tôi gọi</string>
+    <string name="empty_password_field">Nhập mật khẩu</string>
+    <string name="empty_password_again_field">Hãy nhập lại mật khẩu lần nữa</string>
+    <string name="wrong_password_again_field">Mật khẩu nhập lại không giống ban đầu</string>
+    <string name="empty_phone_field">Hãy cho chúng tôi cách liên hệ với bạn</string>
+    <string name="wrong_format_phone_field">Hãy nhập đúng kiểu số điện thoại</string>
+    <string name="empty_address_field">Nhập địa chỉ để chúng mình giao hàng đén bạn</string>
+    <string name="empty_email_field">Hãy nhập địa chỉ email để đăng nhập nào</string>
+    <string name="wrong_format_email_field">Hãy nhập đúng email nhé</string>
 </resources>

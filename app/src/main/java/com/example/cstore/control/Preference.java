@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
+
+import com.example.cstore.model.Account;
 import com.example.cstore.model.ProductOrder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,9 +22,11 @@ public class Preference {
      ********************************************************************** */
     private final String preferenceName = "Preference";
     private final String cartList = preferenceName + ":listCart";
-    private final String shipping = preferenceName + ":shipping";
+    private final String shippingName = preferenceName + ":shippingName";
+    private final String shippingId = preferenceName + ":shippingId";
     private final String shippingPrice = preferenceName + ":shippingPrice";
     private final String productPrice = preferenceName + ":productPrice";
+    private final String accountRegistered = preferenceName + ":account";
 
     private SharedPreferences shared = null;
     private SharedPreferences.Editor editor = null;
@@ -115,17 +119,23 @@ public class Preference {
     }
 
     void saveShippingDelivery(String shippingName){
-        editor.putString(shipping, shippingName).apply();
+        editor.putString(this.shippingName, shippingName).apply();
+    }
+    String getShippingDelivery(){
+        return shared.getString(shippingName, "Chưa chọn");
+    }
+
+    void saveShippingId(String shipping){
+        editor.putString(shippingId, shipping).apply();
+    }
+    String getShippingId(){
+        return shared.getString(shippingId, "Chưa chọn");
     }
     Integer getShippingPrice(){
         return shared.getInt(shippingPrice, 0);
     }
     void saveShippingPrice(Integer price){
         editor.putInt(shippingPrice, price).apply();
-    }
-
-    String getShippingDelivery(){
-        return shared.getString(shipping, "Chưa chọn");
     }
 
 
@@ -135,5 +145,33 @@ public class Preference {
 
     void saveProductPrice(Integer price){
         editor.putInt(productPrice, price).apply();
+    }
+
+   void saveAccount(Account account){
+       try {
+           Type type = new TypeToken<Account>() {
+           }.getType();
+           String json = gson.toJson(account, type);
+           if (editor != null) {
+               editor.putString(accountRegistered, json).apply();
+           }
+       } catch (Exception e) {
+           Log.d("ERROR", "getCart: " + e.getMessage());
+       }
+   }
+
+    Account getRegisteredAccount() {
+        Account account = new Account();
+        try {
+            String serializedObject = shared.getString(accountRegistered, null);
+            if (serializedObject != null) {
+                Type type = new TypeToken<Account>() {
+                }.getType();
+                account = gson.fromJson(serializedObject, type);
+            }
+        } catch (Exception e) {
+            Log.d("ERROR", "getCart: " + e.getMessage());
+        }
+        return account;
     }
 }

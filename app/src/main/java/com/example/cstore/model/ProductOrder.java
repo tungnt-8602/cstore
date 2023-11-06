@@ -1,5 +1,7 @@
 package com.example.cstore.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ProductOrder {
     private String id;
     private String name;
@@ -8,6 +10,7 @@ public class ProductOrder {
     private String size;
     private String categoryId;
     private String image;
+//    @SerializedName("quantity")
     private Integer orderNumber;
 
     public ProductOrder() {

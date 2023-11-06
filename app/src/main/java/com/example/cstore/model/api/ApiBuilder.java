@@ -1,6 +1,7 @@
 package com.example.cstore.model.api;
 
 import com.example.cstore.common.Utility;
+import com.example.cstore.model.Account;
 import com.example.cstore.model.Category;
 import com.example.cstore.model.Order;
 import com.example.cstore.model.Product;
@@ -41,6 +42,12 @@ public interface ApiBuilder {
     @GET("api/shipping")
     Call<List<ShippingDelivery>> getAllShipping();
 
+    @GET("api/shipping")
+    Call<List<Order>> getOrderByAccountId(@Query("accountId") String accountId);
+
     @POST("api/order")
     Call<Order> saveOrder(@Body Order order);
+
+    @POST("api/account/register")
+    Call<Account> register(@Body Account account);
 }

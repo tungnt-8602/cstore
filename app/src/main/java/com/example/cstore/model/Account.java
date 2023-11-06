@@ -1,6 +1,9 @@
 package com.example.cstore.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Account {
+    @SerializedName("_id")
     private String id;
     private String username;
     private String password;
@@ -9,6 +12,14 @@ public class Account {
     private String email;
 
     public Account() {
+    }
+
+    public Account(String username, String password, String address, String phone, String email) {
+        this.username = username;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
     }
 
     public Account(String id, String username, String password, String address, String phone, String email) {
