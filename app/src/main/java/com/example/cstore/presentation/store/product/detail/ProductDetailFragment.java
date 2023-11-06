@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderVerticalAdapter;
+import com.example.cstore.common.Utility;
 import com.example.cstore.databinding.FragmentProductDetailBinding;
 import com.example.cstore.model.Image;
 import com.example.cstore.model.Product;
@@ -120,7 +121,7 @@ public class ProductDetailFragment extends Fragment {
                         sliderView.startAutoCycle();
 
                         binding.productName.setText(p.getName());
-                        binding.productPrice.setText(p.getPrice().toString());
+                        binding.productPrice.setText(Utility.formatIntNumber(p.getPrice()));
                         binding.colorPick.setAdapter(new MyBaseAdapter(requireContext(), p.getColors()));
                         binding.sizePick.setAdapter(new MyBaseAdapter(requireContext(), p.getSizes()));
 

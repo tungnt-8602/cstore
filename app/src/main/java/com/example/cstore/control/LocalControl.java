@@ -52,4 +52,27 @@ public class LocalControl {
     public List<ProductOrder> getCart() {
         return preference.getCart();
     }
+
+    public void pickShippingDelivery(String shippingName){
+        preference.saveShippingDelivery(shippingName);
+    }
+
+    public String getShippingDelivery(){
+        return preference.getShippingDelivery();
+    }
+    public void saveShippingPrice(Integer price){
+        preference.saveShippingPrice(price);
+    }
+
+    public Integer getShippingPrice(){
+        return preference.getShippingPrice();
+    }
+
+    public void saveProductPrice(Integer price){
+        preference.saveProductPrice(price);
+    }
+
+    public Integer getProductPrice(){
+        return preference.getProductPrice();
+    }
 }

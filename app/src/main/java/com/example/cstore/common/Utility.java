@@ -1,10 +1,6 @@
 package com.example.cstore.common;
 
-import android.content.Context;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-
-import java.util.Objects;
+import java.text.DecimalFormat;
 
 public class Utility {
     //Công ty: máy thật
@@ -13,6 +9,16 @@ public class Utility {
 //    public static String BASE_URL = "http://192.168.27.110:9999/";
 
     //Nhà
-    public static String BASE_URL = "http://192.168.0.101:9999/";
+//    public static String BASE_URL = "http://192.168.0.102:9999/";
 
+    public static String BASE_URL = "http://192.168.60.222:9999/";
+
+
+    public static String formatIntNumber(Integer number){
+        return new DecimalFormat("#,###").format(number);
+    }
+
+    public static String formatDoubleNumber(Double number){
+        return new DecimalFormat("#,###.00").format(number);
+    }
 }

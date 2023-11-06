@@ -8,6 +8,7 @@
         android:id="@+id/po_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="@dimen/space"
         android:src="@drawable/ic_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -17,8 +18,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:maxLength="20"
-        style="@style/BaseText"
+        android:maxLines="2"
+        style="@style/TitleCart"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/po_image"
@@ -29,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/SubText"
+        android:textColor="@color/red_800"
         android:text="@string/po_size"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@id/po_name"
@@ -39,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/po_color"
+        android:textColor="@color/green_700"
         style="@style/SubText"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@id/po_name"
@@ -49,6 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:textColor="@color/cyan_600"
         style="@style/BaseText"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,43 +61,27 @@
         app:layout_constraintBottom_toBottomOf="@id/po_number"
         app:layout_constraintStart_toEndOf="@id/po_image"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
         android:id="@+id/po_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/po_number"
+        android:textColor="@color/brown_600"
+        android:layout_marginTop="@dimen/space_large"
         app:layout_constraintEnd_toEndOf="@id/po_name"
-        app:layout_constraintTop_toBottomOf="@id/po_size"
-        android:layout_marginTop="16dp">
+        app:layout_constraintTop_toBottomOf="@id/po_color"/>
 
-        <ImageButton
-            android:id="@+id/minus_po"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_minus"
-            android:backgroundTint="@color/blue" />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="po_image, po_price, po_number" />
 
-        <EditText
-            android:id="@+id/po_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:background="@null"
-            app:layout_constraintStart_toEndOf="@id/minus_po"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageButton
-            android:id="@+id/bonus_po"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/po_count"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_bonus"
-            android:backgroundTint="@color/blue" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/item_div"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space"
+        app:layout_constraintTop_toBottomOf="@id/barrier"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

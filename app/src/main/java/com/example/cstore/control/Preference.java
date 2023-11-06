@@ -20,6 +20,9 @@ public class Preference {
      ********************************************************************** */
     private final String preferenceName = "Preference";
     private final String cartList = preferenceName + ":listCart";
+    private final String shipping = preferenceName + ":shipping";
+    private final String shippingPrice = preferenceName + ":shippingPrice";
+    private final String productPrice = preferenceName + ":productPrice";
 
     private SharedPreferences shared = null;
     private SharedPreferences.Editor editor = null;
@@ -109,5 +112,28 @@ public class Preference {
         } catch (Exception e) {
             Log.d("ERROR", "getCart: " + e.getMessage());
         }
+    }
+
+    void saveShippingDelivery(String shippingName){
+        editor.putString(shipping, shippingName).apply();
+    }
+    Integer getShippingPrice(){
+        return shared.getInt(shippingPrice, 0);
+    }
+    void saveShippingPrice(Integer price){
+        editor.putInt(shippingPrice, price).apply();
+    }
+
+    String getShippingDelivery(){
+        return shared.getString(shipping, "Chưa chọn");
+    }
+
+
+    Integer getProductPrice(){
+        return shared.getInt(productPrice, 0);
+    }
+
+    void saveProductPrice(Integer price){
+        editor.putInt(productPrice, price).apply();
     }
 }

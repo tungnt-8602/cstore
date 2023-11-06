@@ -34,4 +34,14 @@
     <string name="total_pay">Thành tiền:</string>
     <string name="ship_supplier">Đơn vị vận chuyển</string>
     <string name="default_shipping">Chưa chọn</string>
+    <string name="po_number">"Số lượng: "</string>
+    <string name="confirm_delete">Xác nhận</string>
+    <string name="confirm_delete_po_content">Bạn muốn xoá sản phẩm này khỏi giỏ hàng ?</string>
+    <string name="yes_confirm">Xác nhận</string>
+    <string name="no_confirm">Hoàn tác</string>
+    <string name="deleted_po">"Đã xoá sản phẩm "</string>
+    <string name="from_cart">khỏi giỏ hàng</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="undo_notice">Hoàn tác thành công</string>
+    <string name="no_po_in_cart">Chưa có sản phẩm nào trong giỏ hàng</string>
 </resources>

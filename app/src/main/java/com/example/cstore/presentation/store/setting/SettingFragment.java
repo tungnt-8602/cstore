@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentSettingBinding;
 import com.example.cstore.presentation.login.LoginFragment;
+import com.example.cstore.presentation.store.cart.CartFragment;
 
 public class SettingFragment extends Fragment {
     /* **********************************************************************
@@ -72,6 +73,20 @@ public class SettingFragment extends Fragment {
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.wrapper, new LoginFragment(), null).commit();
+            }
+        });
+
+        binding.inCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
             }
         });
     }

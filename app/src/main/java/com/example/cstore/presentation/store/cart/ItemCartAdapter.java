@@ -5,8 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cstore.R;
+import com.example.cstore.common.Utility;
 import com.example.cstore.model.ProductOrder;
 
 import java.util.List;
@@ -25,6 +24,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
     private Context context;
     private List<ProductOrder> poArrayList;
     private OnClickListener onClickListener;
+    private OnClickListener onMinusClickListener;
+    private OnClickListener onBonusClickListener;
+    private Integer totalPrice;
 
     public ItemCartAdapter(Context context, List<ProductOrder> poArrayList) {
         this.context = context;
@@ -45,9 +47,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
         ProductOrder p = poArrayList.get(position);
         Glide.with(context).load(p.getImage()).into(holder.poImage);
         holder.poName.setText(p.getName());
-        holder.poPrice.setText(p.getPrice().toString());
-        holder.poSize.setText(holder.poSize.getText() + p.getSize());
-        holder.poColor.setText(holder.poColor.getText() + p.getColor());
+        holder.poPrice.setText(Utility.formatIntNumber(p.getPrice()));
+        holder.poSize.setText(p.getSize());
+        holder.poColor.setText(p.getColor());
         holder.poNumber.setText(p.getOrderNumber().toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,18 +57,6 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
                 if (onClickListener != null) {
                     onClickListener.onClick(position, p);
                 }
-            }
-        });
-        holder.poMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        holder.poBonus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
     }
@@ -77,6 +67,16 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
+        notifyDataSetChanged();
+    }
+
+    public void setOnBonusClickListener(OnClickListener onBonusClickListener) {
+        this.onClickListener = onBonusClickListener;
+        notifyDataSetChanged();
+    }
+
+    public void setOnMinusClickListener(OnClickListener onMinusClickListener) {
+        this.onClickListener = onMinusClickListener;
         notifyDataSetChanged();
     }
 
@@ -91,9 +91,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
         private final TextView poPrice;
         private final TextView poSize;
         private final TextView poColor;
-        private EditText poNumber;
-        private final ImageButton poMinus;
-        private final ImageButton poBonus;
+        private TextView poNumber;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             poImage = itemView.findViewById(R.id.po_image);
@@ -101,9 +99,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
             poPrice = itemView.findViewById(R.id.po_price);
             poSize = itemView.findViewById(R.id.po_size);
             poColor = itemView.findViewById(R.id.po_color);
-            poNumber = itemView.findViewById(R.id.po_count);
-            poMinus = itemView.findViewById(R.id.minus_po);
-            poBonus = itemView.findViewById(R.id.bonus_po);
+            poNumber = itemView.findViewById(R.id.po_number);
         }
     }
 }

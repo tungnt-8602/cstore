@@ -1,28 +1,25 @@
 package com.example.cstore.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class Order {
+    @SerializedName("_id")
     private String id;
-    private Product product;
-    private Integer orderNumber;
-    private String shippingDeliveryId;
+    private String account;
+    private List<ProductOrder> products;
+    private String shipping;
 
     public Order() {
     }
 
-    public Order(String id, Product product, Integer orderNumber, String shippingDeliveryId) {
+    public Order(String id, String account, List<ProductOrder> productOrderList, String shipping) {
         this.id = id;
-        this.product = product;
-        this.orderNumber = orderNumber;
-        this.shippingDeliveryId = shippingDeliveryId;
-    }
-
-    public String getShippingDeliveryId() {
-        return shippingDeliveryId;
-    }
-
-    public void setShippingDeliveryId(String shippingDeliveryId) {
-        this.shippingDeliveryId = shippingDeliveryId;
+        this.account = account;
+        this.products = productOrderList;
+        this.shipping = shipping;
     }
 
     public String getId() {
@@ -33,19 +30,27 @@ public class Order {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getAccount() {
+        return account;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public Integer getOrderNumber() {
-        return orderNumber;
+    public List<ProductOrder> getProductOrderList() {
+        return products;
     }
 
-    public void setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setProductOrderList(List<ProductOrder> productOrderList) {
+        this.products = productOrderList;
+    }
+
+    public String getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(String shipping) {
+        this.shipping = shipping;
     }
 }

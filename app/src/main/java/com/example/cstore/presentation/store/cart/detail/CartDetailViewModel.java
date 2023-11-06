@@ -12,4 +12,12 @@ public class CartDetailViewModel extends BaseViewModel {
     public void addToCart(ProductOrder po){
         local.saveToCart(po);
     }
+
+    public Integer getProductPrice(){
+        return local.getProductPrice();
+    }
+
+    public void updateProductPrice(Integer price){
+        local.saveProductPrice(price);
+    }
 }

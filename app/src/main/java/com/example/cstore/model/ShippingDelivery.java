@@ -6,13 +6,13 @@ public class ShippingDelivery {
     @SerializedName("_id")
     private String id;
     private String name;
-    private Integer price;
+    private String price;
     private Integer deliveryTime;
 
     public ShippingDelivery() {
     }
 
-    public ShippingDelivery(String id, String name, Integer price, Integer deliveryTime) {
+    public ShippingDelivery(String id, String name, String price, Integer deliveryTime) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -35,11 +35,11 @@ public class ShippingDelivery {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

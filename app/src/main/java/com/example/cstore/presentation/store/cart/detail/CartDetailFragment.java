@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.cstore.R;
+import com.example.cstore.common.Utility;
 import com.example.cstore.databinding.FragmentCartDetailBinding;
 import com.example.cstore.model.Product;
 import com.example.cstore.model.ProductOrder;
@@ -102,8 +103,8 @@ public class CartDetailFragment extends Fragment {
                         if (p != null) {
                             Glide.with(requireContext()).load(p.getImages().get(0).getUrl()).into(binding.poImage);
                             binding.poName.setText(p.getName());
-                            binding.poPrice.setText(p.getPrice().toString());
-                            binding.poInStock.setText(binding.poInStock.getText() + p.getQuantity().toString());
+                            binding.poPrice.setText(Utility.formatIntNumber(p.getPrice()));
+                            binding.poInStock.setText(binding.poInStock.getText() + Utility.formatIntNumber(p.getQuantity()));
                             List<String> colorOption = p.getColors();
                             List<String> sizeOption = p.getSizes();
                             colorAdapter = new ArrayAdapter(getContext(), R.layout.dropdown_item, colorOption);
@@ -141,6 +142,20 @@ public class CartDetailFragment extends Fragment {
                                     sizePopup.show();
                                 }
                             });
+                            binding.minusPo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(Integer.parseInt(binding.poCount.getText().toString()) > 1){
+                                        binding.poCount.setText(String.valueOf(Integer.parseInt(binding.poCount.getText().toString()) - 1));
+                                    }
+                                }
+                            });
+                            binding.bonusPo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    binding.poCount.setText(String.valueOf(Integer.parseInt(binding.poCount.getText().toString()) + 1));
+                                }
+                            });
                             binding.cartAddBtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -148,6 +163,8 @@ public class CartDetailFragment extends Fragment {
                                         Snackbar.make(binding.getRoot(), "Chọn size hoặc màu để thêm vào giỏ hàng", Snackbar.LENGTH_SHORT).show();
                                     }else{
                                         viewModel.addToCart(new ProductOrder(p.getId(), p.getName(), p.getPrice(), (String) binding.colorText.getText(), (String) binding.sizeText.getText(), p.getCategoryId(), p.getImages().get(0).getUrl(), Integer.valueOf(binding.poCount.getText().toString())));
+                                        Integer currentPrice = viewModel.getProductPrice();
+                                        viewModel.updateProductPrice(currentPrice + p.getPrice()*Integer.parseInt(binding.poCount.getText().toString()));
                                         getParentFragmentManager().popBackStack();
                                     }
                                 }

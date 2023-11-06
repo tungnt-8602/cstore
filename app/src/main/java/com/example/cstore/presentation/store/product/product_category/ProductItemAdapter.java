@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cstore.R;
+import com.example.cstore.common.Utility;
 import com.example.cstore.model.Product;
 
 import java.util.List;
@@ -44,8 +45,8 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         Product p = productsArrayList.get(position);
         Glide.with(context).load(p.getImages().get(0).getUrl()).into(holder.productThumb);
         holder.productName.setText(p.getName());
-        holder.productPrice.setText(p.getPrice().toString());
-        holder.fakePrice.setText(Double.valueOf(p.getPrice()*1.5).toString());
+        holder.productPrice.setText(Utility.formatIntNumber(p.getPrice()));
+        holder.fakePrice.setText(Utility.formatDoubleNumber(p.getPrice()*1.5));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
