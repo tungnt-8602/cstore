@@ -59,4 +59,10 @@
     <string name="empty_address_field">Nhập địa chỉ để chúng mình giao hàng đén bạn</string>
     <string name="empty_email_field">Hãy nhập địa chỉ email để đăng nhập nào</string>
     <string name="wrong_format_email_field">Hãy nhập đúng email nhé</string>
+    <string name="empty_size_color_field">Chọn size hoặc màu để thêm vào giỏ hàng</string>
+    <string name="added_to_cart">Thêm sản phẩm vào giỏ hàng thành công</string>
+    <string name="login_success">Chào mừng đến với thế giới của Coolmate</string>
+    <string name="account_already">Đã có tài khoản ?</string>
+    <string name="login">Đăng nhập</string>
+    <string name="account_unavailable">Chưa có tài khoản ? </string>
 </resources>

@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGray"
-    android:scrollbars="none">
+    tools:context=".presentation.store.setting.SettingFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".presentation.store.setting.SettingFragment">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_information"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -29,296 +26,346 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="noone in the hood"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/login_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@id/avatar"
-                app:layout_constraintTop_toTopOf="@id/avatar" />
+                app:layout_constraintTop_toTopOf="@id/avatar"
+                app:layout_constraintBottom_toBottomOf="@id/avatar"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="nooneinthehood@gmail.com"
-                android:textSize="18dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="noone in the hood"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/space_large"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/email"/>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="nooneinthehood@gmail.com"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/username"
+                    app:layout_constraintTop_toBottomOf="@id/username" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/not_login_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toEndOf="@id/avatar"
-                app:layout_constraintTop_toBottomOf="@id/username" />
+                app:layout_constraintTop_toTopOf="@id/avatar"
+                app:layout_constraintBottom_toBottomOf="@id/avatar"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/login_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:text="Đăng nhập"
+                    android:textAllCaps="false"
+                    style="@style/SubText"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/signup_btn"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/signup_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng ký"
+                    android:textAllCaps="false"
+                    style="@style/SubText"
+                    android:background="@drawable/bg_signup_btn"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/login_btn"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/account_topic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_setting_topic"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintTop_toBottomOf="@id/user_information">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:background="@drawable/item_touch"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/profile_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_icon"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_profile"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/profile_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Tài khoản"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_icon"
-                    app:layout_constraintStart_toEndOf="@id/profile_icon"
-                    app:layout_constraintTop_toTopOf="@id/profile_icon" />
-
-                <ImageView
-                    android:id="@+id/profile_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/profile_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:background="@drawable/item_touch"
-                app:layout_constraintTop_toBottomOf="@id/profile">
-
-                <ImageView
-                    android:id="@+id/address_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_icon"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_delivery_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/address_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Địa chỉ giao hàng"
-                    app:layout_constraintBottom_toBottomOf="@id/address_icon"
-                    app:layout_constraintStart_toEndOf="@id/address_icon"
-                    app:layout_constraintTop_toTopOf="@id/address_icon" />
-
-                <ImageView
-                    android:id="@+id/address_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="@id/address_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/address_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/purchase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:background="@drawable/item_touch"
-                app:layout_constraintTop_toBottomOf="@id/address">
-
-                <ImageView
-                    android:id="@+id/purchase_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_icon"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_purchase"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/purchase_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Phương thức thanh toán"
-                    app:layout_constraintBottom_toBottomOf="@id/purchase_icon"
-                    app:layout_constraintStart_toEndOf="@id/purchase_icon"
-                    app:layout_constraintTop_toTopOf="@id/purchase_icon" />
-
-                <ImageView
-                    android:id="@+id/purchase_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="@id/purchase_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/purchase_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/order_topic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_setting_topic"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintTop_toBottomOf="@id/account_topic">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/order"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:background="@drawable/item_touch"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/order_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_icon"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_ordered"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/order_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Lịch sử mua hàng"
-                    app:layout_constraintBottom_toBottomOf="@id/order_icon"
-                    app:layout_constraintStart_toEndOf="@id/order_icon"
-                    app:layout_constraintTop_toTopOf="@id/order_icon" />
-
-                <ImageView
-                    android:id="@+id/order_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="@id/order_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/order_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/in_cart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:background="@drawable/item_touch"
-                app:layout_constraintTop_toBottomOf="@id/order">
-
-                <ImageView
-                    android:id="@+id/in_cart_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_icon"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_in_cart"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/in_cart_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Giỏ hàng"
-                    app:layout_constraintBottom_toBottomOf="@id/in_cart_icon"
-                    app:layout_constraintStart_toEndOf="@id/in_cart_icon"
-                    app:layout_constraintTop_toTopOf="@id/in_cart_icon" />
-
-                <ImageView
-                    android:id="@+id/in_cart_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="@id/in_cart_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/in_cart_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/processing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:background="@drawable/item_touch"
-                app:layout_constraintTop_toBottomOf="@id/in_cart">
-
-                <ImageView
-                    android:id="@+id/processing_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_icon"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_processing"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/processing_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Đang xử lý"
-                    app:layout_constraintBottom_toBottomOf="@id/processing_icon"
-                    app:layout_constraintStart_toEndOf="@id/processing_icon"
-                    app:layout_constraintTop_toTopOf="@id/processing_icon" />
-
-                <ImageView
-                    android:id="@+id/processing_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="@id/processing_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/processing_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:backgroundTint="@color/bluer"
-            android:text="Đăng xuất"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/order_topic" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fake_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/login_info"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:background="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logout_btn" />
+            app:layout_constraintTop_toBottomOf="@id/user_information"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/account_topic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_setting_topic"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/item_touch"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/profile_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_profile"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/profile_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Tài khoản"
+                        app:layout_constraintBottom_toBottomOf="@id/profile_icon"
+                        app:layout_constraintStart_toEndOf="@id/profile_icon"
+                        app:layout_constraintTop_toTopOf="@id/profile_icon" />
+
+                    <ImageView
+                        android:id="@+id/profile_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="@id/profile_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/profile_icon" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/item_touch"
+                    app:layout_constraintTop_toBottomOf="@id/profile">
+
+                    <ImageView
+                        android:id="@+id/address_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_delivery_address"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/address_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Địa chỉ giao hàng"
+                        app:layout_constraintBottom_toBottomOf="@id/address_icon"
+                        app:layout_constraintStart_toEndOf="@id/address_icon"
+                        app:layout_constraintTop_toTopOf="@id/address_icon" />
+
+                    <ImageView
+                        android:id="@+id/address_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="@id/address_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/address_icon" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/purchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/item_touch"
+                    app:layout_constraintTop_toBottomOf="@id/address">
+
+                    <ImageView
+                        android:id="@+id/purchase_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_purchase"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/purchase_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Phương thức thanh toán"
+                        app:layout_constraintBottom_toBottomOf="@id/purchase_icon"
+                        app:layout_constraintStart_toEndOf="@id/purchase_icon"
+                        app:layout_constraintTop_toTopOf="@id/purchase_icon" />
+
+                    <ImageView
+                        android:id="@+id/purchase_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="@id/purchase_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/purchase_icon" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/order_topic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_setting_topic"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/account_topic">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/item_touch"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/order_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_ordered"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/order_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Lịch sử mua hàng"
+                        app:layout_constraintBottom_toBottomOf="@id/order_icon"
+                        app:layout_constraintStart_toEndOf="@id/order_icon"
+                        app:layout_constraintTop_toTopOf="@id/order_icon" />
+
+                    <ImageView
+                        android:id="@+id/order_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="@id/order_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/order_icon" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/in_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/item_touch"
+                    app:layout_constraintTop_toBottomOf="@id/order">
+
+                    <ImageView
+                        android:id="@+id/in_cart_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_in_cart"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/in_cart_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Giỏ hàng"
+                        app:layout_constraintBottom_toBottomOf="@id/in_cart_icon"
+                        app:layout_constraintStart_toEndOf="@id/in_cart_icon"
+                        app:layout_constraintTop_toTopOf="@id/in_cart_icon" />
+
+                    <ImageView
+                        android:id="@+id/in_cart_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="@id/in_cart_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/in_cart_icon" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/processing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/item_touch"
+                    app:layout_constraintTop_toBottomOf="@id/in_cart">
+
+                    <ImageView
+                        android:id="@+id/processing_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_processing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/processing_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Đang xử lý"
+                        app:layout_constraintBottom_toBottomOf="@id/processing_icon"
+                        app:layout_constraintStart_toEndOf="@id/processing_icon"
+                        app:layout_constraintTop_toTopOf="@id/processing_icon" />
+
+                    <ImageView
+                        android:id="@+id/processing_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="@id/processing_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/processing_icon" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/logout_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:backgroundTint="@color/bluer"
+                android:text="Đăng xuất"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/order_topic" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

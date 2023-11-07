@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
@@ -17,6 +19,9 @@ import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentSignupBinding;
 import com.example.cstore.model.Account;
 import com.example.cstore.model.api.ApiBuilder;
+import com.example.cstore.presentation.login.LoginFragment;
+import com.example.cstore.presentation.store.PagerFragment;
+import com.example.cstore.presentation.store.cart.CartFragment;
 
 import java.util.Objects;
 
@@ -144,7 +149,14 @@ public class SignupFragment extends Fragment {
                         if(registeredAccount != null){
                             viewModel.saveAccount(registeredAccount);
                         }
-                        getParentFragmentManager().popBackStack();
+                        FragmentManager fm = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        );
+                        transaction.replace(R.id.wrapper, new PagerFragment(), null).addToBackStack(null).commit();
                     }
 
                     @Override
@@ -155,6 +167,18 @@ public class SignupFragment extends Fragment {
             }
         });
 
-
+        binding.loginSwapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new LoginFragment(), null).addToBackStack(null).commit();
+            }
+        });
     }
 }

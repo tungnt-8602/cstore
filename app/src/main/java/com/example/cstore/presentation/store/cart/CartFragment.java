@@ -31,6 +31,7 @@ import com.example.cstore.model.Order;
 import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.ShippingDelivery;
 import com.example.cstore.model.api.ApiBuilder;
+import com.example.cstore.presentation.store.PagerFragment;
 import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
 import com.example.cstore.presentation.store.setting.SignupFragment;
 import com.google.android.material.snackbar.Snackbar;
@@ -225,7 +226,14 @@ public class CartFragment extends Fragment {
                         public void onResponse(Call<Order> call, Response<Order> response) {
                             Log.d("order api", "onResponse: " + response.body());
                             Snackbar.make(binding.getRoot(), "Đặt hàng thành công", Snackbar.LENGTH_SHORT).show();
-                            getParentFragmentManager().popBackStack();;
+                            FragmentManager fm = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                                    R.anim.slide_in,  // enter
+                                    R.anim.fade_out,  // exit
+                                    R.anim.fade_in,   // popEnter
+                                    R.anim.slide_out  // popExit
+                            );
+                            transaction.replace(R.id.wrapper, new PagerFragment(), null).addToBackStack(null).commit();
                         }
 
                         @Override

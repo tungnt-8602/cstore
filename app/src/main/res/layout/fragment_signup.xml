@@ -176,6 +176,31 @@
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/login_swap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BaseText"
+        app:layout_constraintTop_toTopOf="@id/login_swap_btn"
+        app:layout_constraintBottom_toBottomOf="@id/login_swap_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/login_swap_btn"
+        android:textColor="@color/bluer"
+        android:text="@string/account_already"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/login_swap_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/other_field"
+        app:layout_constraintStart_toEndOf="@id/login_swap"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_login_swap_btn"
+        android:textColor="@color/bluer"
+        android:layout_margin="@dimen/space"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_btn"
         android:layout_width="match_parent"

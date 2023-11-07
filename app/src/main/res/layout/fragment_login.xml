@@ -21,75 +21,87 @@
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--edit text for user name-->
-    <EditText
-        android:id="@+id/idEdtUserName"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/user_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/idTVHeader"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/black"
-        android:hint="@string/hint_username_login"
-        android:inputType="textEmailAddress"
-        android:textColorHint="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/idTVHeader" />
+        android:layout_marginHorizontal="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idTVHeader"
+        app:startIconDrawable="@drawable/ic_user"
+        app:startIconTint="@color/bluer">
 
-    <!--edit text for user password-->
-    <EditText
-        android:id="@+id/idEdtPassword"
-        android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/idEdtUserName"
+            style="@style/BaseText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_size"
+            android:hint="@string/hint_username_login"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/idEdtUserName"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/light_black"
-        android:hint="@string/hint_password_login"
-        android:inputType="textPassword"
-        android:textColorHint="@color/light_black"
-        app:layout_constraintTop_toBottomOf="@id/idEdtUserName" />
+        android:layout_marginHorizontal="@dimen/space_large"
+        android:layout_marginTop="@dimen/space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/blue"
+        app:layout_constraintTop_toBottomOf="@id/user_name"
+        app:startIconDrawable="@drawable/ic_password"
+        app:startIconTint="@color/bluer">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/idEdtPassword"
+            style="@style/BaseText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_size"
+            android:hint="@string/hint_password_login"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/login_swap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BaseText"
+        app:layout_constraintTop_toTopOf="@id/signup_swap_btn"
+        app:layout_constraintBottom_toBottomOf="@id/signup_swap_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/signup_swap_btn"
+        android:textColor="@color/bluer"
+        android:text="@string/account_unavailable"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_swap_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toEndOf="@id/login_swap"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_login_swap_btn"
+        android:textColor="@color/bluer"
+        android:layout_margin="@dimen/space"/>
 
     <!--button to register our new user-->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/idBtnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/idEdtPassword"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/black"
+        android:layout_margin="@dimen/space_large"
+        android:background="@color/bluer"
         android:text="Login"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/idEdtPassword" />
-
-    <Button
-        android:id="@+id/idBtnLoginByFB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/idBtnLogin"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:text="Signup with Facebook"
-        android:drawableLeft="@drawable/ic_fb"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/idBtnLogin" />
-
-    <Button
-        android:id="@+id/idBtnLoginByGmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/idBtnLoginByFB"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:text="Signup with Gmail"
-        android:drawableLeft="@drawable/ic_gmail"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/idBtnLoginByFB" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

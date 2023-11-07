@@ -3,6 +3,7 @@ package com.example.cstore.presentation.store.setting;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Binder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +19,11 @@ import android.widget.TextView;
 
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentSettingBinding;
+import com.example.cstore.model.Account;
 import com.example.cstore.presentation.login.LoginFragment;
+import com.example.cstore.presentation.store.PagerFragment;
 import com.example.cstore.presentation.store.cart.CartFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 public class SettingFragment extends Fragment {
     /* **********************************************************************
@@ -29,6 +33,7 @@ public class SettingFragment extends Fragment {
     public static String NAME_KEY = "username";
     public static String PASS_KEY = "password";
     private FragmentSettingBinding binding;
+    SettingViewModel viewModel = new SettingViewModel();
 
     /* **********************************************************************
      * Constructor
@@ -57,37 +62,76 @@ public class SettingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences modePreferences = requireActivity().getSharedPreferences(USER_FILE_NAME, Context.MODE_PRIVATE);
-        TextView username = binding.username;
-        TextView email = binding.email;
-        String usn = modePreferences.getString(NAME_KEY, "123");
-        username.setText(usn);
-        email.setText(usn + "@gmail.com");
-        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modePreferences.edit().putString(NAME_KEY, null).apply();
-                modePreferences.edit().putString(PASS_KEY, null).apply();
-//                Intent intent = new Intent(requireActivity(), LoginFragment.class);
-//                startActivity(intent);
-                FragmentManager fm = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.wrapper, new LoginFragment(), null).commit();
-            }
-        });
+        Account account = viewModel.getAccount();
+        if(account == null){
+            binding.loginLayout.setVisibility(View.GONE);
+            binding.notLoginLayout.setVisibility(View.VISIBLE);
+            binding.loginInfo.setVisibility(View.GONE);
+            binding.loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    );
+                    transaction.replace(R.id.wrapper, new LoginFragment(), null).addToBackStack(null).commit();
+                }
+            });
+            binding.signupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    );
+                    transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
+                }
+            });
+        }
+        else {
+            binding.loginLayout.setVisibility(View.VISIBLE);
+            binding.notLoginLayout.setVisibility(View.GONE);
+            binding.loginInfo.setVisibility(View.VISIBLE);
+            TextView username = binding.username;
+            TextView email = binding.email;
+            username.setText(account.getUsername());
+            email.setText(account.getEmail());
+            binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewModel.saveAccount(null);
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    );
+                    transaction.replace(R.id.wrapper, new PagerFragment(), null).addToBackStack(null).commit();
+                    Snackbar.make(binding.getRoot(), "Đăng xuất thành công", Snackbar.LENGTH_SHORT).show();
+                }
+            });
 
-        binding.inCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                        R.anim.slide_in,  // enter
-                        R.anim.fade_out,  // exit
-                        R.anim.fade_in,   // popEnter
-                        R.anim.slide_out  // popExit
-                );
-                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
-            }
-        });
+            binding.inCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    );
+                    transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
+                }
+            });
+        }
+
     }
 }

@@ -160,12 +160,13 @@ public class CartDetailFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     if(binding.sizeText.getText().equals("") && binding.sizeText.getText().equals("")){
-                                        Snackbar.make(binding.getRoot(), "Chọn size hoặc màu để thêm vào giỏ hàng", Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.make(binding.getRoot(), getResources().getString(R.string.empty_size_color_field), Snackbar.LENGTH_SHORT).show();
                                     }else{
                                         viewModel.addToCart(new ProductOrder(p.getId(), p.getName(), p.getPrice(), (String) binding.colorText.getText(), (String) binding.sizeText.getText(), p.getCategoryId(), p.getImages().get(0).getUrl(), Integer.valueOf(binding.poCount.getText().toString())));
                                         Integer currentPrice = viewModel.getProductPrice();
                                         viewModel.updateProductPrice(currentPrice + p.getPrice()*Integer.parseInt(binding.poCount.getText().toString()));
                                         getParentFragmentManager().popBackStack();
+                                        Snackbar.make(binding.getRoot(), getResources().getString(R.string.added_to_cart), Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
                             });

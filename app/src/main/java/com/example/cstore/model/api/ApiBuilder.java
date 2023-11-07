@@ -50,4 +50,6 @@ public interface ApiBuilder {
 
     @POST("api/account/register")
     Call<Account> register(@Body Account account);
+    @POST("api/account/login")
+    Call<Account> login(@Body Account account);
 }

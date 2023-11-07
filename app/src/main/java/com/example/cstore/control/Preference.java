@@ -161,7 +161,7 @@ public class Preference {
    }
 
     Account getRegisteredAccount() {
-        Account account = new Account();
+        Account account = null;
         try {
             String serializedObject = shared.getString(accountRegistered, null);
             if (serializedObject != null) {

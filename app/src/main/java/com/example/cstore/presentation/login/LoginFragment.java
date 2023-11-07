@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,17 @@ import android.widget.Toast;
 
 import com.example.cstore.R;
 import com.example.cstore.databinding.FragmentLoginBinding;
+import com.example.cstore.model.Account;
+import com.example.cstore.model.api.ApiBuilder;
 import com.example.cstore.presentation.store.PagerFragment;
+import com.example.cstore.presentation.store.setting.SignupFragment;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
     /* **********************************************************************
@@ -29,6 +40,7 @@ public class LoginFragment extends Fragment {
     public static String NAME_KEY = "username";
     public static String PASS_KEY = "password";
     private FragmentLoginBinding binding;
+    LoginViewModel viewModel = new LoginViewModel();
     /* **********************************************************************
      * Constructor
      ********************************************************************** */
@@ -54,22 +66,63 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        EditText userNameEdt = binding.idEdtUserName;
-        EditText passwordEdt = binding.idEdtPassword;
 
         binding.idBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View view) {
-                String userName = userNameEdt.getText().toString();
-                String password = passwordEdt.getText().toString();
-
-                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(requireContext(), "Please enter user name and password", Toast.LENGTH_SHORT).show();
+                String userName = "";
+                String password = "";
+                if(Objects.requireNonNull(binding.idEdtUserName.getText()).toString().equals("")) {
+                    binding.userName.setError(getResources().getString(R.string.empty_username_field));
+                    return;
                 } else {
-                    loginUser(userName, password);
+                    userName = binding.idEdtUserName.getText().toString();
                 }
-                loginUser(userName, userName);
+
+                if(Objects.requireNonNull(binding.idEdtPassword.getText()).toString().equals("")) {
+                    binding.idEdtPassword.setError(getResources().getString(R.string.empty_password_field));
+                    return;
+                } else {
+                    password = binding.idEdtPassword.getText().toString();
+                }
+                Account registerAccount = new Account(userName, password);
+                ApiBuilder.apiService.login(registerAccount).enqueue(new Callback<Account>() {
+                    @Override
+                    public void onResponse(Call<Account> call, Response<Account> response) {
+                        Account registeredAccount = response.body();
+                        if(registeredAccount != null){
+                            viewModel.saveAccount(registeredAccount);
+                        }
+                        Snackbar.make(binding.getRoot(), getResources().getString(R.string.login_success), Snackbar.LENGTH_SHORT).show();
+                        FragmentManager fm = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        );
+                        transaction.replace(R.id.wrapper, new PagerFragment(), null).addToBackStack(null).commit();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Account> call, Throwable t) {
+                        Log.d("call account api", "onFailure: " + t.getMessage());
+                    }
+                });
+                binding.signupSwapBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentManager fm = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        );
+                        transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
+                    }
+                });
             }
         });
     }
