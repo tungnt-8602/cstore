@@ -1,4 +1,4 @@
-package com.example.cstore.presentation.store.setting;
+package com.example.cstore.presentation.login;
 
 import com.example.cstore.common.base.BaseViewModel;
 import com.example.cstore.model.Account;

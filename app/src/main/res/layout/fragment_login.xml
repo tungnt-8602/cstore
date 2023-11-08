@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@id/password"
         app:layout_constraintStart_toEndOf="@id/login_swap"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/login"
+        android:text="@string/signup"
         android:textAllCaps="false"
         android:background="@drawable/bg_login_swap_btn"
         android:textColor="@color/bluer"
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_large"
         android:background="@color/bluer"
-        android:text="Login"
+        android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"/>

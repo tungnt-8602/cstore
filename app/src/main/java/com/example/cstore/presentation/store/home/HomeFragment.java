@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.cstore.R;
 import com.example.cstore.common.SliderData;
 import com.example.cstore.common.SliderHorizontalAdapter;
@@ -75,33 +75,32 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             startActivity(intent);
         });
 
-        binding.cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                        R.anim.slide_in,  // enter
-                        R.anim.fade_out,  // exit
-                        R.anim.fade_in,   // popEnter
-                        R.anim.slide_out  // popExit
-                );
-                transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
-            }
+        binding.cart.setOnClickListener(view1 -> {
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                    R.anim.slide_in,  // enter
+                    R.anim.fade_out,  // exit
+                    R.anim.fade_in,   // popEnter
+                    R.anim.slide_out  // popExit
+            );
+            transaction.replace(R.id.wrapper, new CartFragment(), null).addToBackStack(null).commit();
         });
 
-        moveToDetail(binding.storyHeader, binding.storyTitle, binding.storyShortDes);
-        moveToDetail(binding.storyHeader1, binding.storyTitle1, binding.storyShortDes1);
-        moveToDetail(binding.storyHeader2, binding.storyTitle2, binding.storyShortDes2);
+        moveToDetail(binding.storyHeader, binding.storyTitle.getText().toString(), getResources().getString(R.string.who_is_coolmate));
+        moveToDetail(binding.storyHeader1, binding.storyTitle1.getText().toString(), getResources().getString(R.string.customer_service));
+        moveToDetail(binding.storyHeader2, binding.storyTitle2.getText().toString(), getResources().getString(R.string.staff));
+
+        Glide.with(requireContext()).load("https://mcdn.coolmate.me/image/October2023/mceclip0_1.png").into(binding.thanksImg);
     }
 
     /* **********************************************************************
      * Function
      ********************************************************************** */
-    void moveToDetail(View clickView, TextView title, TextView subTitle){
+    void moveToDetail(View clickView, String title, String subTitle){
         clickView.setOnClickListener(v -> {
             Bundle result = new Bundle();
-            result.putString("storyTitle", title.getText().toString());
-            result.putString("storySubTitle", subTitle.getText().toString());
+            result.putString("storyTitle", title);
+            result.putString("storySubTitle", subTitle);
             getParentFragmentManager().setFragmentResult("storyKey", result);
             FragmentManager fm = requireActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(

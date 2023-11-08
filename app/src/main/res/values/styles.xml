@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:card_view="http://schemas.android.com/apk/res-auto">
+<resources>
     <style name="TitleText" parent="@android:style/Widget.TextView">
         <item name="android:textSize" >20sp</item>
         <item name="android:textStyle">bold</item>
@@ -12,6 +12,11 @@
 
     <style name="BaseText" parent="@android:style/Widget.TextView">
         <item name="android:textSize" >16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="BigText" parent="@android:style/Widget.TextView">
+        <item name="android:textSize" >20sp</item>
         <item name="android:textStyle">normal</item>
     </style>
 

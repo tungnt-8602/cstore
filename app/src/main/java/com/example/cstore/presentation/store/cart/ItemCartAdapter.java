@@ -21,12 +21,9 @@ import java.util.List;
 @SuppressLint("NotifyDataSetChanged")
 public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHolder> {
 
-    private Context context;
-    private List<ProductOrder> poArrayList;
+    private final Context context;
+    private final List<ProductOrder> poArrayList;
     private OnClickListener onClickListener;
-    private OnClickListener onMinusClickListener;
-    private OnClickListener onBonusClickListener;
-    private Integer totalPrice;
 
     public ItemCartAdapter(Context context, List<ProductOrder> poArrayList) {
         this.context = context;
@@ -51,12 +48,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
         holder.poSize.setText(p.getSize());
         holder.poColor.setText(p.getColor());
         holder.poNumber.setText(p.getOrderNumber().toString());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(position, p);
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (onClickListener != null) {
+                onClickListener.onClick(position, p);
             }
         });
     }
@@ -70,18 +64,11 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void setOnBonusClickListener(OnClickListener onBonusClickListener) {
-        this.onClickListener = onBonusClickListener;
-        notifyDataSetChanged();
-    }
-
-    public void setOnMinusClickListener(OnClickListener onMinusClickListener) {
-        this.onClickListener = onMinusClickListener;
-        notifyDataSetChanged();
-    }
-
     @Override
     public int getItemCount() {
+        if(poArrayList == null){
+            return 0;
+        }
         return poArrayList.size();
     }
 
@@ -91,7 +78,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ViewHo
         private final TextView poPrice;
         private final TextView poSize;
         private final TextView poColor;
-        private TextView poNumber;
+        private final TextView poNumber;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             poImage = itemView.findViewById(R.id.po_image);

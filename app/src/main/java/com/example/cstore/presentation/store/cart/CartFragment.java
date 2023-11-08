@@ -1,10 +1,13 @@
 package com.example.cstore.presentation.store.cart;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -17,13 +20,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
 import com.example.cstore.R;
 import com.example.cstore.common.Utility;
 import com.example.cstore.databinding.FragmentCartBinding;
@@ -31,9 +27,9 @@ import com.example.cstore.model.Order;
 import com.example.cstore.model.ProductOrder;
 import com.example.cstore.model.ShippingDelivery;
 import com.example.cstore.model.api.ApiBuilder;
+import com.example.cstore.presentation.login.SignupFragment;
 import com.example.cstore.presentation.store.PagerFragment;
 import com.example.cstore.presentation.store.product.detail.ProductDetailFragment;
-import com.example.cstore.presentation.store.setting.SignupFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -51,7 +47,6 @@ public class CartFragment extends Fragment {
     ArrayAdapter shippingAdapter ;
     ListPopupWindow shippingPopup;
     CartViewModel viewModel = new CartViewModel();
-    Integer totalPrice = 0;
     /* **********************************************************************
      * Constructor
      ********************************************************************** */
@@ -83,7 +78,7 @@ public class CartFragment extends Fragment {
         recyclerCart = binding.cartList;
         shippingPopup = new ListPopupWindow(requireContext());
         List<ProductOrder> poList = viewModel.getCart();
-        if(poList.size() == 0){
+        if(poList == null ||poList.size() == 0){
             binding.totalPrice.setText(getResources().getString(viewModel.noPoInCart));
         } else {
             binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
@@ -107,14 +102,15 @@ public class CartFragment extends Fragment {
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.END) {
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                assert poList != null;
                 ProductOrder po = poList.get(position);
                 poList.remove(position);
                 viewModel.updateAllCart(poList);
@@ -124,48 +120,39 @@ public class CartFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                 builder.setTitle(getResources().getString(viewModel.deleteConfirmTitle));
                 builder.setMessage(getResources().getString(viewModel.deleteConfirmMessage));
-                builder.setPositiveButton(getResources().getString(viewModel.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        poAdapter.notifyDataSetChanged();
-                        if(poList.size() == 0){
-                            binding.totalPrice.setText(getResources().getString(viewModel.noPoInCart));
-                        }else{
-                            binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
+                builder.setPositiveButton(getResources().getString(viewModel.yes), (dialog, which) -> {
+                    poAdapter.notifyDataSetChanged();
+                    if(poList.size() == 0){
+                        binding.totalPrice.setText(getResources().getString(viewModel.noPoInCart));
+                    }else{
+                        binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
 
-                            Snackbar.make(
-                                            binding.getRoot(),getResources().getString(viewModel.deleted) + po.getName() + " " + getResources().getString(viewModel.fromCart),
-                                            Snackbar.LENGTH_LONG
-                                    )
-                                    .setAction(viewModel.undo, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            poList.add(position, po);
-                                            viewModel.updateAllCart(poList);
-                                            poAdapter.notifyDataSetChanged();
-                                            Integer price = viewModel.getProductPrice() + po.getOrderNumber()*po.getPrice();
-                                            viewModel.updateProductPrice(price);
-                                            binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
-                                        }
-                                    })
-                                    .show();
-                        }
+                        Snackbar.make(
+                                        binding.getRoot(),getResources().getString(viewModel.deleted) + po.getName() + " " + getResources().getString(viewModel.fromCart),
+                                        Snackbar.LENGTH_LONG
+                                )
+                                .setAction(viewModel.undo, v -> {
+                                    poList.add(position, po);
+                                    viewModel.updateAllCart(poList);
+                                    poAdapter.notifyDataSetChanged();
+                                    Integer price1 = viewModel.getProductPrice() + po.getOrderNumber()*po.getPrice();
+                                    viewModel.updateProductPrice(price1);
+                                    binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
+                                })
+                                .show();
                     }
                 });
 
-                builder.setNegativeButton(getResources().getString(viewModel.no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        poList.add(position, po);
-                        viewModel.updateAllCart(poList);
-                        poAdapter.notifyDataSetChanged();
-                        Integer price = viewModel.getProductPrice() + po.getOrderNumber()*po.getPrice();
-                        viewModel.updateProductPrice(price);
-                        binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
-                        Snackbar.make(binding.getRoot(), getResources().getString(viewModel.undoDelete), Snackbar.LENGTH_LONG)
-                                .setAnchorView(binding.getRoot())
-                                .show();
-                    }
+                builder.setNegativeButton(getResources().getString(viewModel.no), (dialog, which) -> {
+                    poList.add(position, po);
+                    viewModel.updateAllCart(poList);
+                    poAdapter.notifyDataSetChanged();
+                    Integer price12 = viewModel.getProductPrice() + po.getOrderNumber()*po.getPrice();
+                    viewModel.updateProductPrice(price12);
+                    binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
+                    Snackbar.make(binding.getRoot(), getResources().getString(viewModel.undoDelete), Snackbar.LENGTH_LONG)
+                            .setAnchorView(binding.getRoot())
+                            .show();
                 });
                 builder.show();
             }
@@ -176,20 +163,19 @@ public class CartFragment extends Fragment {
         ApiBuilder.apiService.getAllShipping()
                 .enqueue(new Callback<List<ShippingDelivery>>() {
                     @Override
-                    public void onResponse(Call<List<ShippingDelivery>> call, Response<List<ShippingDelivery>> response) {
+                    public void onResponse(@NonNull Call<List<ShippingDelivery>> call, @NonNull Response<List<ShippingDelivery>> response) {
                         List<ShippingDelivery> lsp = response.body();
                         List<String> shippingListName = new ArrayList<>();
                         List<String> shippingListId = new ArrayList<>();
-                        for (ShippingDelivery sd: lsp) {
-                            shippingListName.add(sd.getName());
-                            shippingListId.add(sd.getId());
-                        }
-                        shippingAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, shippingListName);
-                        shippingPopup.setAdapter(shippingAdapter);
-                        shippingPopup.setAnchorView(binding.shippingBotDiv);
-                        shippingPopup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if(lsp != null){
+                            for (ShippingDelivery sd: lsp) {
+                                shippingListName.add(sd.getName());
+                                shippingListId.add(sd.getId());
+                            }
+                            shippingAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, shippingListName);
+                            shippingPopup.setAdapter(shippingAdapter);
+                            shippingPopup.setAnchorView(binding.shippingBotDiv);
+                            shippingPopup.setOnItemClickListener((adapterView, view1, i, l) -> {
                                 binding.shippingPick.setText(shippingListName.get(i));
                                 viewModel.updateShipping(shippingListName.get(i));
                                 viewModel.updateShippingId(shippingListId.get(i));
@@ -197,64 +183,59 @@ public class CartFragment extends Fragment {
                                 viewModel.updateShippingPrice(shippingFee);
                                 shippingPopup.dismiss();
                                 binding.totalPrice.setText(Utility.formatIntNumber(viewModel.getProductPrice() + viewModel.getShippingPrice()));
-                            }
-                        });
+                            });
 
-                        binding.shippingOption.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                shippingPopup.show();
-                            }
-                        });
+                            binding.shippingOption.setOnClickListener(view12 -> shippingPopup.show());
+                        }
+
                     }
 
                     @Override
-                    public void onFailure(Call<List<ShippingDelivery>> call, Throwable t) {
+                    public void onFailure(@NonNull Call<List<ShippingDelivery>> call, @NonNull Throwable t) {
 
                     }
                 });
-        binding.orderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viewModel.getAccount() != null){
-                    List<ProductOrder> poList = viewModel.getCart();
-                    String accountId = viewModel.getAccount().getId();
-                    String shippingId = viewModel.getShippingId();
-                    Order order = new Order(accountId, poList, shippingId);
-                    ApiBuilder.apiService.saveOrder(order).enqueue(new Callback<Order>() {
-                        @Override
-                        public void onResponse(Call<Order> call, Response<Order> response) {
-                            Log.d("order api", "onResponse: " + response.body());
-                            Snackbar.make(binding.getRoot(), "Đặt hàng thành công", Snackbar.LENGTH_SHORT).show();
-                            FragmentManager fm = requireActivity().getSupportFragmentManager();
-                            FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                                    R.anim.slide_in,  // enter
-                                    R.anim.fade_out,  // exit
-                                    R.anim.fade_in,   // popEnter
-                                    R.anim.slide_out  // popExit
-                            );
-                            transaction.replace(R.id.wrapper, new PagerFragment(), null).addToBackStack(null).commit();
-                        }
+        binding.orderBtn.setOnClickListener(view13 -> {
+            if(viewModel.getAccount() != null){
+                List<ProductOrder> poList1 = viewModel.getCart();
+                String accountId = viewModel.getAccount().getId();
+                String shippingId = viewModel.getShippingId();
+                Order order = new Order(accountId, poList1, shippingId);
+                ApiBuilder.apiService.saveOrder(order).enqueue(new Callback<Order>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
+                        Log.d("order api", "onResponse: " + response.body());
+                        Snackbar.make(binding.getRoot(), "Đặt hàng thành công", Snackbar.LENGTH_SHORT).show();
+                        FragmentManager fm = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        );
+                        transaction.replace(R.id.wrapper, new PagerFragment(), null).addToBackStack(null).commit();
+                    }
 
-                        @Override
-                        public void onFailure(Call<Order> call, Throwable t) {
-                            Log.d("order api", "onResponse: " + t.getMessage());
-                        }
-                    });
+                    @Override
+                    public void onFailure(@NonNull Call<Order> call, @NonNull Throwable t) {
+                        Log.d("order api", "onResponse: " + t.getMessage());
+                        Snackbar.make(binding.getRoot(), getResources().getString(R.string.no_po_in_cart), Snackbar.LENGTH_SHORT).show();
+                        getParentFragmentManager().popBackStack();
+                    }
+                });
 
-                }else{
-                    Snackbar.make(binding.getRoot(), "Vui lòng đăng ký tài khoản để đặt hàng", Snackbar.LENGTH_SHORT).show();
-                    FragmentManager fm = requireActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
-                            R.anim.slide_in,  // enter
-                            R.anim.fade_out,  // exit
-                            R.anim.fade_in,   // popEnter
-                            R.anim.slide_out  // popExit
-                    );
-                    transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
-                }
-
+            }else{
+                Snackbar.make(binding.getRoot(), getResources().getString(R.string.not_login), Snackbar.LENGTH_SHORT).show();
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().setCustomAnimations(
+                        R.anim.slide_in,  // enter
+                        R.anim.fade_out,  // exit
+                        R.anim.fade_in,   // popEnter
+                        R.anim.slide_out  // popExit
+                );
+                transaction.replace(R.id.wrapper, new SignupFragment(), null).addToBackStack(null).commit();
             }
+
         });
     }
 }

@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
-import androidx.annotation.RequiresApi;
 
+import androidx.annotation.RequiresApi;
 import com.example.cstore.model.Account;
 import com.example.cstore.model.ProductOrder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,7 +72,7 @@ public class Preference {
     Boolean checkAddDuplicateProductToCart(ProductOrder poToCart, List<ProductOrder> poList) {
         boolean duplicate = false;
         Log.d("list cart", "saveToCart: " + poList);
-        if (!poList.isEmpty()) {
+        if (poList != null) {
             for (ProductOrder poElement : poList) {
                 if (Objects.equals(poElement.getId(), poToCart.getId()) &&
                         Objects.equals(poElement.getName(), poToCart.getName()) &&
@@ -91,7 +89,7 @@ public class Preference {
     }
 
     List<ProductOrder> getCart() {
-        List<ProductOrder> listRemote = new ArrayList<>();
+        List<ProductOrder> listRemote = null;
         try {
             String serializedObject = shared.getString(cartList, null);
             if (serializedObject != null) {
@@ -114,6 +112,7 @@ public class Preference {
                 editor.putString(cartList, json.replace("[", "").replace("]", "")).apply();
             }
         } catch (Exception e) {
+            editor.putString(cartList, "").apply();
             Log.d("ERROR", "getCart: " + e.getMessage());
         }
     }
